@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>My Big Data Collection </title>
+    <link>https://omennemo.github.io/tutorial/post/index.xml</link>
+    <language>en-us</language>
+    <author>Nimesh Vellera</author>
+    <rights>(C) 2017</rights>
+    <updated>2017-04-13 00:56:37 &#43;0530 IST</updated>
+
+    
+      
+        <item>
+          <title>Installing Java on Ubuntu Guest</title>
+          <link>https://omennemo.github.io/tutorial/post/install-java/</link>
+          <pubDate>Thu, 13 Apr 2017 00:56:37 IST</pubDate>
+          <author>Nimesh Vellera</author>
+          <guid>https://omennemo.github.io/tutorial/post/install-java/</guid>
+          <description>&lt;p&gt;&lt;strong&gt;INSTALL VMWare workstation&lt;/strong&gt;
+Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;INSTALL UBUNTU&lt;/strong&gt;
+Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)&lt;/p&gt;
+</description>
+        </item>
+      
+    
+
+  </channel>
+</rss>
