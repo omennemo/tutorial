@@ -49,7 +49,7 @@ Search VM Ware workstation for windows and install. If required enable virtualiz
 INSTALL UBUNTU
 Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
 JAVA Installation
-Step1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz )">
+Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory">
         <meta itemprop="url" content="https://omennemo.github.io/tutorial/post/install-java/">
         <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
           <meta itemprop="url" content="https://omennemo.github.io/tutorial/images/default.jpg" />
@@ -86,7 +86,85 @@ Step1:- Google Search “Java 8 download” in the internet and download 64&fras
 
 <p><strong>JAVA Installation</strong></p>
 
-<p>Step1:- Google Search “Java 8 download” in the internet and download <sup>64</sup>&frasl;<sub>32</sub> bit java ( tar.gz )</p>
+<p>Step 1:- Google Search “Java 8 download” in the internet and download <sup>64</sup>&frasl;<sub>32</sub> bit java ( tar.gz )
+You are in ~/Downloads directory</p>
+
+<p>Step 2: sudo cp jdk-8u121-linux-x64.tar.gz /usr/local
+(coping tar file from Downloads directory to /usr/local/.)
+cd /usr/local</p>
+
+<p>Step 3:-  sudo tar -xvzf jdk-8u121-linux-x64.tar.gz
+Step 4:-  sudo rm jdk-8u121-linux-x64.tar.gz
+Step 5:-  sudo ln -s jdk1.8.0_121 java (rm -r java if symbolic link error)
+    sudo chmod 777 jdk1.8.0_121
+Step 6:-  sudo update-alternatives &ndash;install &ldquo;/usr/bin/java&rdquo; &ldquo;java&rdquo; &ldquo;/usr/local/java/bin/java&rdquo; 1
+Step 7:-  sudo update-alternatives &ndash;install &ldquo;/usr/bin/javac&rdquo; &ldquo;javac&rdquo; &ldquo;/usr/local/java/bin/javac&rdquo; 1
+Step 8:- sudo update-alternatives &ndash;install &ldquo;/usr/bin/javaws&rdquo; &ldquo;javaws&rdquo; &ldquo;/usr/local/java/bin/javaws&rdquo; 1
+Step 9 :-
+sudo update-alternatives –set java /usr/local/java/bin/java
+sudo update-alternatives –set javac /usr/local/java/bin/javac
+sudo update-alternatives –set javaws /usr/local/java/bin/javaws</p>
+
+<p>sudo vi  ~/.bashrc
+(Write at the end below script)</p>
+
+<p>esc+o (to add new lines)</p>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>export PATH</dt>
+</dl>
+
+<dl>
+<dt>port PATH</dt>
+</dl>
+
+<p>:wq (To save the file and exit)</p>
+
+<p>Step 10:-
+source ~/.bashrc</p>
+
+<p>Step 11:-
+java -version</p>
+
+<p>java version &ldquo;1.8.0_121&rdquo;
+Java&trade; SE Runtime Environment (build 1.8.0_121-b13)
+Java HotSpot&trade; Server VM (build 25.121-b13, mixed mode)</p>
 
         </div>
 
@@ -148,7 +226,7 @@ Search VM Ware workstation for windows and install. If required enable virtualiz
 INSTALL UBUNTU
 Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
 JAVA Installation
-Step1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz )</div>
+Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory</div>
     </div>
   </a>
 </article>
