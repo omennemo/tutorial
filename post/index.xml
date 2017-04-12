@@ -16,11 +16,17 @@
           <pubDate>Thu, 13 Apr 2017 00:56:37 IST</pubDate>
           <author>Nimesh Vellera</author>
           <guid>https://omennemo.github.io/tutorial/post/install-java/</guid>
-          <description>&lt;p&gt;&lt;strong&gt;INSTALL VMWare workstation&lt;/strong&gt;
-Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.&lt;/p&gt;
+          <description>&lt;p&gt;&lt;strong&gt;INSTALL VMWare workstation&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;INSTALL UBUNTU&lt;/strong&gt;
-Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)&lt;/p&gt;
+&lt;p&gt;Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;INSTALL UBUNTU&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;JAVA Installation&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Step1:- Google Search “Java 8 download” in the internet and download &lt;sup&gt;64&lt;/sup&gt;&amp;frasl;&lt;sub&gt;32&lt;/sub&gt; bit java ( tar.gz )&lt;/p&gt;
 </description>
         </item>
       
