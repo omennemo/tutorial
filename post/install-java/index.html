@@ -100,28 +100,38 @@ cd /usr/local</p>
 <p>Step 5:-  sudo ln -s jdk1.8.0_121 java (rm -r java if symbolic link error)
     sudo chmod 777 jdk1.8.0_121</p>
 
-<p>Step 6:-  sudo update-alternatives &ndash;install &ldquo;/usr/bin/java&rdquo; &ldquo;java&rdquo; &ldquo;/usr/local/java/bin/java&rdquo; 1</p>
+<p>Step 6:-  &gt;sudo update-alternatives &ndash;install &ldquo;/usr/bin/java&rdquo; &ldquo;java&rdquo; &ldquo;/usr/local/java/bin/java&rdquo; 1</p>
 
-<p>Step 7:-  sudo update-alternatives &ndash;install &ldquo;/usr/bin/javac&rdquo; &ldquo;javac&rdquo; &ldquo;/usr/local/java/bin/javac&rdquo; 1</p>
+<p>Step 7:-  &gt;sudo update-alternatives &ndash;install &ldquo;/usr/bin/javac&rdquo; &ldquo;javac&rdquo; &ldquo;/usr/local/java/bin/javac&rdquo; 1</p>
 
-<p>Step 8:- sudo update-alternatives &ndash;install &ldquo;/usr/bin/javaws&rdquo; &ldquo;javaws&rdquo; &ldquo;/usr/local/java/bin/javaws&rdquo; 1</p>
+<p>Step 8:- &gt;sudo update-alternatives &ndash;install &ldquo;/usr/bin/javaws&rdquo; &ldquo;javaws&rdquo; &ldquo;/usr/local/java/bin/javaws&rdquo; 1</p>
 
 <p>Step 9 :-
-sudo update-alternatives –set java /usr/local/java/bin/java
-sudo update-alternatives –set javac /usr/local/java/bin/javac
-sudo update-alternatives –set javaws /usr/local/java/bin/javaws
-sudo vi  ~/.bashrc
+&gt;sudo update-alternatives –set java /usr/local/java/bin/java</p>
+
+<blockquote>
+<p>sudo update-alternatives –set javac /usr/local/java/bin/javac</p>
+
+<p>sudo update-alternatives –set javaws /usr/local/java/bin/javaws</p>
+
+<p>sudo vi  ~/.bashrc
 (Write at the end below script)</p>
+</blockquote>
 
 <p>esc+o (to add new lines)</p>
 
 <blockquote>
-<p>JAVA_HOME=/usr/local/java/java
-JRE_HOME=$JAVA_HOME/jre
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-export JAVA_HOME
-export JRE_HOME
-export PATH</p>
+<p>JAVA_HOME=/usr/local/java/java</p>
+
+<p>JRE_HOME=$JAVA_HOME/jre</p>
+
+<p>PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</p>
+
+<p>export JAVA_HOME</p>
+
+<p>export JRE_HOME</p>
+
+<p>export PATH</p>
 </blockquote>
 
 <p>:wq (To save the file and exit)</p>
