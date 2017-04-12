@@ -33,74 +33,42 @@ You are in ~/Downloads directory&lt;/p&gt;
 (coping tar file from Downloads directory to /usr/local/.)
 cd /usr/local&lt;/p&gt;
 
-&lt;p&gt;Step 3:-  sudo tar -xvzf jdk-8u121-linux-x64.tar.gz
-Step 4:-  sudo rm jdk-8u121-linux-x64.tar.gz
-Step 5:-  sudo ln -s jdk1.8.0_121 java (rm -r java if symbolic link error)
-    sudo chmod 777 jdk1.8.0_121
-Step 6:-  sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/java&amp;rdquo; &amp;ldquo;java&amp;rdquo; &amp;ldquo;/usr/local/java/bin/java&amp;rdquo; 1
-Step 7:-  sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javac&amp;rdquo; &amp;ldquo;javac&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javac&amp;rdquo; 1
-Step 8:- sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javaws&amp;rdquo; &amp;ldquo;javaws&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javaws&amp;rdquo; 1
-Step 9 :-
+&lt;p&gt;Step 3:-  sudo tar -xvzf jdk-8u121-linux-x64.tar.gz&lt;/p&gt;
+
+&lt;p&gt;Step 4:-  sudo rm jdk-8u121-linux-x64.tar.gz&lt;/p&gt;
+
+&lt;p&gt;Step 5:-  sudo ln -s jdk1.8.0_121 java (rm -r java if symbolic link error)
+    sudo chmod 777 jdk1.8.0_121&lt;/p&gt;
+
+&lt;p&gt;Step 6:-  sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/java&amp;rdquo; &amp;ldquo;java&amp;rdquo; &amp;ldquo;/usr/local/java/bin/java&amp;rdquo; 1&lt;/p&gt;
+
+&lt;p&gt;Step 7:-  sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javac&amp;rdquo; &amp;ldquo;javac&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javac&amp;rdquo; 1&lt;/p&gt;
+
+&lt;p&gt;Step 8:- sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javaws&amp;rdquo; &amp;ldquo;javaws&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javaws&amp;rdquo; 1&lt;/p&gt;
+
+&lt;p&gt;Step 9 :-
 sudo update-alternatives –set java /usr/local/java/bin/java
 sudo update-alternatives –set javac /usr/local/java/bin/javac
-sudo update-alternatives –set javaws /usr/local/java/bin/javaws&lt;/p&gt;
-
-&lt;p&gt;sudo vi  ~/.bashrc
+sudo update-alternatives –set javaws /usr/local/java/bin/javaws
+sudo vi  ~/.bashrc
 (Write at the end below script)&lt;/p&gt;
 
 &lt;p&gt;esc+o (to add new lines)&lt;/p&gt;
 
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;export PATH&lt;/dt&gt;
-&lt;/dl&gt;
-
-&lt;dl&gt;
-&lt;dt&gt;port PATH&lt;/dt&gt;
-&lt;/dl&gt;
+&lt;blockquote&gt;
+&lt;p&gt;JAVA_HOME=/usr/local/java/java
+JRE_HOME=$JAVA_HOME/jre
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME
+export JRE_HOME
+export PATH&lt;/p&gt;
+&lt;/blockquote&gt;
 
 &lt;p&gt;:wq (To save the file and exit)&lt;/p&gt;
 
-&lt;p&gt;Step 10:-
-source ~/.bashrc&lt;/p&gt;
+&lt;p&gt;Step 10:- source ~/.bashrc&lt;/p&gt;
 
-&lt;p&gt;Step 11:-
-java -version&lt;/p&gt;
+&lt;p&gt;Step 11:- java -version&lt;/p&gt;
 
 &lt;p&gt;java version &amp;ldquo;1.8.0_121&amp;rdquo;
 Java&amp;trade; SE Runtime Environment (build 1.8.0_121-b13)
