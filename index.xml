@@ -29,38 +29,52 @@
 &lt;p&gt;Step 1:- Google Search “Java 8 download” in the internet and download &lt;sup&gt;64&lt;/sup&gt;&amp;frasl;&lt;sub&gt;32&lt;/sub&gt; bit java ( tar.gz )
 You are in ~/Downloads directory&lt;/p&gt;
 
-&lt;p&gt;Step 2: sudo cp jdk-8u121-linux-x64.tar.gz /usr/local
-(coping tar file from Downloads directory to /usr/local/.)
-cd /usr/local&lt;/p&gt;
+&lt;p&gt;Step 2:&lt;/p&gt;
 
-&lt;p&gt;Step 3:-  sudo tar -xvzf jdk-8u121-linux-x64.tar.gz&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo cp jdk-8u121-linux-x64.tar.gz /usr/local&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Step 4:-  sudo rm jdk-8u121-linux-x64.tar.gz&lt;/p&gt;
+&lt;p&gt;(coping tar file from Downloads directory to /usr/local/.)&lt;/p&gt;
 
-&lt;p&gt;Step 5:-  sudo ln -s jdk1.8.0_121 java (rm -r java if symbolic link error)
-    sudo chmod 777 jdk1.8.0_121&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;cd /usr/local&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Step 6:-&lt;br /&gt;
-&amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/java&amp;rdquo; &amp;ldquo;java&amp;rdquo; &amp;ldquo;/usr/local/java/bin/java&amp;rdquo; 1&lt;/p&gt;
+&lt;p&gt;Step 3:-&lt;/p&gt;
 
-&lt;p&gt;Step 7:-&lt;br /&gt;
-&amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javac&amp;rdquo; &amp;ldquo;javac&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javac&amp;rdquo; 1&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo tar -xvzf jdk-8u121-linux-x64.tar.gz&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;Step 8:-
-&amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javaws&amp;rdquo; &amp;ldquo;javaws&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javaws&amp;rdquo; 1&lt;/p&gt;
+&lt;p&gt;Step 4:-&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo rm jdk-8u121-linux-x64.tar.gz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Step 5:-&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo ln -s jdk1.8.0_121 java&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;(rm -r java if symbolic link error)&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod 777 jdk1.8.0_121&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Step 6:-&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo update-alternatives --install &#39;&#39;/usr/bin/java&amp;quot; &amp;quot;java&amp;quot; &amp;quot;/usr/local/java/bin/java&amp;quot; 1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Step 7:-&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo update-alternatives --install &#39;&#39;/usr/bin/javac&amp;quot; &amp;quot;javac&amp;quot; &amp;quot;/usr/local/java/bin/javac&amp;quot; 1&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Step 8:-&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo update-alternatives --install &#39;&#39;/usr/bin/javaws&amp;quot; &amp;quot;javaws&amp;quot; &amp;quot;/usr/local/java/bin/javaws&amp;quot; 1&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;Step 9 :-&lt;/p&gt;
 
-&lt;p&gt;```sudo update-alternatives &amp;ndash;set java /usr/local/java/bin/java&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo update-alternatives --set java /usr/local/java/bin/java&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;sudo update-alternatives &amp;ndash;set javac /usr/local/java/bin/javac&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo update-alternatives --set javac /usr/local/java/bin/javac&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;sudo update-alternatives &amp;ndash;set javaws /usr/local/java/bin/javaws```&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;sudo update-alternatives --set javaws /usr/local/java/bin/javaws&lt;/code&gt;&lt;/p&gt;
 
-&lt;blockquote&gt;
-&lt;p&gt;sudo vi  ~/.bashrc
+&lt;p&gt;&lt;code&gt;sudo vi  ~/.bashrc&lt;/code&gt;
 (Write at the end below script)&lt;/p&gt;
-&lt;/blockquote&gt;
 
 &lt;p&gt;esc+o (to add new lines)&lt;/p&gt;
 
