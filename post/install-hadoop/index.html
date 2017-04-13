@@ -1,0 +1,518 @@
+<div class="single">
+  <!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="Hugo 0.18.1" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans|Marcellus+SC'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
+    <link rel="stylesheet" href="https://omennemo.github.io/tutorial/css/styles.css">
+    <link rel="stylesheet" href="https://omennemo.github.io/tutorial/css/custom.css">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://omennemo.github.io/tutorial//index.xml">
+
+    
+    <title>Installing Hadoop on the Ubuntu Guest - My Big Data Collection</title>
+    <meta property='og:title' content="Installing Hadoop on the Ubuntu Guest - My Big Data Collection">
+    <meta property="og:type" content="article">
+    
+
+    <meta property="og:url" content="https://omennemo.github.io/tutorial/post/install-hadoop/">
+    
+    
+
+  </head>
+
+  <body>
+
+    <header class="site">
+      <div class="title"><a href="https://omennemo.github.io/tutorial/">My Big Data Collection</a></div>
+    </header>
+
+    <div class="container site">
+
+
+
+  <div class="row">
+    <div class="col-sm-9">
+
+      <article class="single" itemscope="itemscope" itemtype="http://schema.org/Article">
+
+        <meta itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" content="https://omennemo.github.io/tutorial/"/>
+        <meta itemprop="dateModified" content="2017-04-13T11:12:24&#43;05:30">
+        <meta itemprop="headline" content="Installing Hadoop on the Ubuntu Guest">
+        <meta itemprop="description" content="Configure User  Login as Root:
+sudo su
+whoami &ndash; should give root
+ Adding a dedicated Hadoop system user called “hduser”
+We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)
+ Create a group called hadoop">
+        <meta itemprop="url" content="https://omennemo.github.io/tutorial/post/install-hadoop/">
+        <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+          <meta itemprop="url" content="https://omennemo.github.io/tutorial/images/default.jpg" />
+          <meta itemprop="width" content="800">
+          <meta itemprop="height" content="800">
+        </div>
+        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+          <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" content="https://omennemo.github.io/tutorial/images/logo.jpg">
+            <meta itemprop="width" content="100">
+            <meta itemprop="height" content="100">
+          </div>
+          <meta itemprop="name" content="My Big Data Collection">
+        </div>
+        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <meta itemprop="name" content="Nimesh Vellera">
+        </div>
+
+        <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
+
+        <header class="article-header">
+          <time itemprop="datePublished" pubdate="pubdate" datetime="2017-04-13T11:12:24&#43;05:30">Thu, Apr 13, 2017</time>
+          <h1 class="article-title">Installing Hadoop on the Ubuntu Guest</h1>
+        </header>
+
+        <div class="article-body" itemprop="articleBody">
+          
+
+<h2 id="configure-user">Configure User</h2>
+
+<ul>
+<li><p><strong>Login as Root:</strong></p>
+
+<p><code>sudo su</code></p>
+
+<p><code>whoami</code>   &ndash; should give root</p></li>
+
+<li><p>Adding a dedicated Hadoop system user called “hduser”</p>
+
+<p>We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)</p></li>
+
+<li><p>Create a group called hadoop</p>
+
+<p><code>sudo  addgroup hadoop</code></p></li>
+
+<li><p><strong>Create User “hduser”</strong></p>
+
+<p><code>sudo adduser hduser</code></p>
+
+<p>It might ask to enter password 2 ties followed by some information, just press enter and Yes. We have given password hadoop</p></li>
+
+<li><p><strong>Add hduser to hadoop group</strong></p>
+
+<p><code>sudo adduser hduser hadoop</code></p>
+
+<p>One line command for creating user and adding to a particular group :</p>
+
+<p><code>sudo adduser –ingroup hadoop hduser</code></p></li>
+
+<li><p><strong>Add the “hduser” to sudo-ers list so that hduser can do admin tasks</strong></p>
+
+<p><code>sudo visudo</code></p>
+
+<p>Add a line under</p>
+
+<pre><code>##Allow member of group sudo to execute any command anywhere in the format.
+    
+hduser ALL=(ALL) ALL
+</code></pre>
+
+<p>Control+X yes and enter to save file. Logout and login as hduser</p></li>
+</ul>
+
+<h2 id="configure-ssh">Configure SSH</h2>
+
+<p>Hadoop require SSH access to manage its nodes, i.e. remote machines plus your local machine if you want to use Hadoop on it (which is what we want to do in this class). For our single node setup of Hadoop, we therefore need to configure SSH access to localhost for the hduse user we created in the previous section.</p>
+
+<ol>
+<li><p><strong>Install ssh server on your machine</strong></p>
+
+<p><code>sudo apt-get install openssh-server</code></p>
+
+<p>If this did not work, then install openssh-server using Ubuntu software center by searching for openssh-server</p></li>
+
+<li><p><strong>Generate SSH key for communication</strong></p>
+
+<p><code>ssh-keygen</code></p>
+
+<ul>
+<li>Just press enter for whatever is asked.</li>
+<li>Generate public/private rsa key pair</li>
+<li>Enter file to save the key (/home/hduser/.ssh/id_rsa):</li>
+<li>Created directory ‘/home/hduser/.ssh’</li>
+<li>Your identification has been saved in /home/hduser/.ssh/id_rsa</li>
+<li>Your public key has been saved in /home/hduser/.ssh/id_rsa.pub</li>
+</ul></li>
+
+<li><p><strong>Copy Public Key to Authorized_key file &amp; edit the permission</strong></p>
+
+<p>Now copy the public key to the authorized_keys file, so that ssh shpuld not require password every time</p>
+
+<p><code>cat ~/.ssh/id_rsa.pub &gt;&gt; ~/.ssh/authorized_keys</code></p>
+
+<p>Change permission of the authorized_keys file to have all permission for hduser</p>
+
+<p><code>chmod 700 ~/.ssh/authorized_keys</code></p></li>
+
+<li><p><strong>Start SSH</strong></p>
+
+<p>If ssh is not running, then run it by giving the below command</p>
+
+<p><code>sudo /etc/init.d/ssh restart</code></p></li>
+
+<li><p><strong>Test your SSH connectivity</strong></p>
+
+<p><code>ssh localhost</code></p>
+
+<p>Type yes, when asked for. You should be able to connect without password. If you are asked to enter password here, then something went wrong. Please check you previous steps.</p></li>
+
+<li><p><strong>Disable IPV6</strong></p>
+
+<p>Hadoop and IPV6 do not agree on the meaning of 0.0.0.0 address, thus it is advisable to disable IPV6 adding following lines at the end of <em>/etc/sysctl.conf</em></p>
+
+<p><code>sudo nano /etc/sysctl.conf</code></p>
+
+<pre><code>#disable ipv6
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.io.disable_ipv6 = 1
+</code></pre></li>
+
+<li><p><strong>Check if IPV6 is disable or not</strong></p>
+
+<p><code>cat /proc/sys/net/ipv6/conf/all/disable_ipv6</code></p>
+
+<p>It should show you <em>0</em>, after reboot it should show you <em>1</em></p></li>
+</ol>
+
+<h2 id="install-hadoop">Install Hadoop</h2>
+
+<ol>
+<li><p><strong>Download Hadoop</strong></p>
+
+<p>Let us install hadoop 2.7.3 (hadoop-2.7.3.tar.gz). Download hadoop-2.7.3.tar.gz from <a href="http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz">apache</a> and save it in hduser/Desktop</p></li>
+
+<li><p><strong>Move the zip file to /usr/local/</strong></p>
+
+<p><code>sudo mv  ~/Desktop/hadoop-2.7.3.tar.gz /usr/local/</code></p>
+
+<p><code>cd /usr/local</code></p>
+
+<p><code>sudo tar –xvzf hadoop-2.7.3.tar.gz</code></p>
+
+<p><code>sudo rm hadoop-2.7.3.tar.gz</code></p>
+
+<p><code>sudo ln –s hadoop-2.7.3 hadoop</code></p>
+
+<p><code>sudo chown –R hduser:hadoop hadoop-2.7.3</code></p>
+
+<p><code>sudo chown –R hduser:hadoop hadoop</code></p>
+
+<p><code>sudo chmod 777 hadoop-2.7.3</code></p></li>
+
+<li><p><strong>Edit hadoop-env.sh and configure Java</strong></p>
+
+<p>Add the following to <em>/usr/local/hadoop/etc/hadoop/hadoop-env.sh</em> by <strong>removing</strong></p>
+
+<pre><code>export JAVA_HOME=${JAVA_HOME}
+</code></pre>
+
+<p>Editing hadoop-env.sh and <strong>adding the lines below</strong></p>
+
+<p><code>sudo nano /usr/local/hadoop/etc/hadoop/hadoop-env.sh</code></p>
+
+<pre><code>export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true
+export HADOOP_HOME_WARN_SUPPRESS=”TRUE”
+export JAVA_HOME=/usr/local/java
+</code></pre></li>
+
+<li><p><strong>Update ~/.bashrc</strong></p>
+
+<pre><code>#Set Hadoop-related environment variables
+export HADOOP_HOME=/usr/local/hadoop
+export HADOOP_PREFIX=/usr/local/hadoop
+export HADOOP_MAPRED_HOME=${HADOOP_HOME}
+export HADOOP_COMMON_HOME=${HADOOP_HOME}
+export HADOOP_HDFS_HOME=${HADOOP_HOME}
+export HADOOP_YARN_HOME=${HADOOP_HOME}
+export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+
+#Native Path
+
+export HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_PREFIX}/lib/native
+export HADOOP_OPTS=”-Djava.library.path=$HADOOP_PREFIX/lib”
+
+#some convenient aliases and functions for running hadoop related command
+
+JAVA_HOME=/usr/local/java
+JRE_HOME=$JAVA_HOME/jre
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME
+export JRE_HOME
+export PATH
+
+export PATH=$PATH:$HADOOP_HOME/bin:$PATH:$HADOOP_HOME/sbin
+</code></pre></li>
+
+<li><p><strong>Create a temporary directory which will be used as base location for DFS</strong></p>
+
+<p><code>sudo mkdir –p /app/hadoop/tmp</code></p>
+
+<p><code>sudo chown –R hduser:hadoop /app/hadoop/tmp</code></p>
+
+<p><code>sudo chmod –R 777 /app/hadoop/tmp</code></p></li>
+
+<li><p><strong>Update yarn-site.xml</strong></p>
+
+<p><code>nano /usr/local/hadoop/etc/hadoop/yarn-site.xml</code></p>
+
+<pre><code>&lt;property&gt;
+	&lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;
+	&lt;value&gt;mapreduce_shuffle&lt;/value&gt;
+&lt;/property&gt;
+&lt;property&gt;
+	&lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;
+	&lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;
+&lt;/property&gt;
+</code></pre></li>
+
+<li><p><strong>Update core-site.xml</strong></p>
+
+<p><code>nano /usr/local/hadoop/etc/hadoop/core-site.xml</code></p>
+
+<pre><code>&lt;property&gt;
+    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;
+    &lt;value&gt;/app/hadoop/tmp&lt;/value&gt;
+    &lt;description&gt;A base for other temporary directory.&lt;/description&gt;
+&lt;/property&gt;
+    
+&lt;property&gt;
+    &lt;name&gt;fs.default.name&lt;/name&gt;
+    &lt;value&gt;hdfs://localhost:9000&lt;/value&gt;
+    &lt;description&gt;The name of the default file system.
+A URI whose scheme and authority determine the FileSystem implementation. The uri’s scheme determine the config property (fs.SCHEME.impl) naming the    FileSystem implementation class. The uri’s authority is used to determine the host, port, etc. for a filesystem
+&lt;/description&gt;
+&lt;/property&gt;
+</code></pre></li>
+
+<li><p><strong>Create mapred-site.xml from mapred-site.xml.template</strong></p>
+
+<p><code>cp /usr/local/hadoop/etc/hadoop/mapred-site.xml.template /usr/local/hadoop/etc/hadoop/mapred-site.xml</code></p>
+
+<p><code>nano /usr/local/hadoop/etc/hadoop/mapred-site.xml</code></p>
+
+<pre><code>&lt;property&gt;
+    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;
+    &lt;value&gt;yarn&lt;/value&gt;
+&lt;/property&gt;
+</code></pre></li>
+
+<li><p><strong>Create some directory</strong></p>
+
+<p><code>sudo mkdir –p /usr/local/hadoop/yarn_data/hdfs/namenode</code></p>
+
+<p><code>sudo mkdir –p /usr/local/hadoop/yarn_data/hdfs/datanode</code></p>
+
+<p><code>sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/namenode</code></p>
+
+<p><code>sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/datanode</code></p>
+
+<p><code>sudo chown –R hduser:hadoop /usr/local/hadoop/yarn_data/hdfs/namenode</code></p>
+
+<p><code>sudo chown –R hduser:hadoop /usr/local/hadoop/yarn_data/hdfs/datanode</code></p></li>
+
+<li><p><strong>Update hdfs-site.html</strong></p>
+
+<p><code>nano /usr/local/hadoop/etc/hadoop/hdfs-site.xml</code></p>
+
+<pre><code>&lt;property&gt;
+    &lt;name&gt;dfs.replication&lt;/name&gt;
+    &lt;value&gt;1&lt;/value&gt;
+&lt;/property&gt;
+    
+&lt;property&gt;
+    &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;
+    &lt;value&gt;file:/usr/local/hadoop/yarn_data/hdfs/namenode &lt;/value&gt;
+&lt;/property&gt;
+    
+&lt;property&gt;
+    &lt;name&gt;dfs.datanode.name.dir&lt;/name&gt;
+    &lt;value&gt;file:/usr/local/hadoop/yarn_data/hdfs/datanode &lt;/value&gt;
+&lt;/property&gt;
+</code></pre></li>
+
+<li><p><strong>Format your namenode</strong></p>
+
+<p><code>hadoop namenode –format</code></p></li>
+
+<li><p><strong>Start your single node cluster</strong></p>
+
+<p><code>start-dfs.sh</code></p>
+
+<p><code>start-yarn.sh</code></p>
+
+<p><code>jps</code></p></li>
+</ol>
+
+        </div>
+
+
+        <aside>
+          
+
+          <div class="section share">
+            <a href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f&t=Installing%20Hadoop%20on%20the%20Ubuntu%20Guest" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
+            <a href="http://twitter.com/intent/tweet?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f&text=Installing%20Hadoop%20on%20the%20Ubuntu%20Guest&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
+            <a href="https://plus.google.com/share?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-google-plus"></i></a>
+            <a href="http://getpocket.com/edit?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f&title=Installing%20Hadoop%20on%20the%20Ubuntu%20Guest" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
+          </div>
+
+          
+          
+          <div id="disqus_thread"></div>
+          <script type="text/javascript">
+(function() {
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  var disqus_shortname = 'datalytics-1';
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+          </script>
+          <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+          <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+          
+          
+        </aside>
+
+      </article>
+    </div>
+
+    <div class="col-sm-3">
+      <aside class="site">
+
+  
+  <div class="section">
+    <header><div class="title">TableOfContents</div></header>
+    <div class="list-default"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#configure-user">Configure User</a></li>
+<li><a href="#configure-ssh">Configure SSH</a></li>
+<li><a href="#install-hadoop">Install Hadoop</a></li>
+</ul></li>
+</ul>
+</nav></div>
+  </div>
+  
+
+  
+
+  <div class="section">
+    <header><div class="title">LatestPosts</div></header>
+    <div class="content">
+      
+      <div class="sm"><article class="li">
+  <a href="https://omennemo.github.io/tutorial/post/install-hadoop/" class="clearfix">
+    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
+    <div class="detail">
+      <time>Thu, Apr 13, 2017</time>
+      <h2 class="title">Installing Hadoop on the Ubuntu Guest</h2>
+      <div class="summary">Configure User  Login as Root:
+sudo su
+whoami &ndash; should give root
+ Adding a dedicated Hadoop system user called “hduser”
+We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)
+ Create a group called hadoop</div>
+    </div>
+  </a>
+</article>
+</div>
+      
+      <div class="sm"><article class="li">
+  <a href="https://omennemo.github.io/tutorial/post/install-java/" class="clearfix">
+    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
+    <div class="detail">
+      <time>Thu, Apr 13, 2017</time>
+      <h2 class="title">Installing Java on Ubuntu Guest</h2>
+      <div class="summary">INSTALL VMWare workstation
+Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.
+INSTALL UBUNTU
+Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
+JAVA Installation
+Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory</div>
+    </div>
+  </a>
+</article>
+</div>
+      
+      <div class="sm"><article class="li">
+  <a href="https://omennemo.github.io/tutorial/" class="clearfix">
+    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
+    <div class="detail">
+      <time>Thu, Apr 13, 2017</time>
+      <h2 class="title">My Big Data Collection</h2>
+      <div class="summary"></div>
+    </div>
+  </a>
+</article>
+</div>
+      
+      <div class="sm"><article class="li">
+  <a href="https://omennemo.github.io/tutorial/post/" class="clearfix">
+    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
+    <div class="detail">
+      <time>Thu, Apr 13, 2017</time>
+      <h2 class="title">Posts</h2>
+      <div class="summary"></div>
+    </div>
+  </a>
+</article>
+</div>
+      
+    </div>
+  </div>
+
+  
+  <div class="section taxonomies">
+    <header><div class="title">category</div></header>
+    <div class="content">
+      
+    </div>
+  </div>
+  
+  <div class="section taxonomies">
+    <header><div class="title">tag</div></header>
+    <div class="content">
+      
+    </div>
+  </div>
+  
+
+</aside>
+
+    </div>
+
+  </div>
+
+      </div>
+
+    <footer class="site">
+      <p>&copy; 2017 My Big Data Collection</p>
+      <p>Powered by <a href="http://gohugo.io" target="_blank" rel="nofollow">Hugo</a>, Theme <a href="https://github.com/dim0627/hugo_theme_robust" target="_blank" rel="nofollow">robust</a> designed by <a href="http://yet.unresolved.xyz" target="_blank" rel="nofollow">Daisuke Tsuji</a></p>
+    </footer>
+
+    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    
+
+  </body>
+</html>
+
+</div>

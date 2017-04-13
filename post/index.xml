@@ -6,8 +6,299 @@
     <language>en-us</language>
     <author>Nimesh Vellera</author>
     <rights>(C) 2017</rights>
-    <updated>2017-04-13 00:56:37 &#43;0530 IST</updated>
+    <updated>2017-04-13 11:12:24 &#43;0530 IST</updated>
 
+    
+      
+        <item>
+          <title>Installing Hadoop on the Ubuntu Guest</title>
+          <link>https://omennemo.github.io/tutorial/post/install-hadoop/</link>
+          <pubDate>Thu, 13 Apr 2017 11:12:24 IST</pubDate>
+          <author>Nimesh Vellera</author>
+          <guid>https://omennemo.github.io/tutorial/post/install-hadoop/</guid>
+          <description>
+
+&lt;h2 id=&#34;configure-user&#34;&gt;Configure User&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Login as Root:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo su&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;whoami&lt;/code&gt;   &amp;ndash; should give root&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Adding a dedicated Hadoop system user called “hduser”&lt;/p&gt;
+
+&lt;p&gt;We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create a group called hadoop&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo  addgroup hadoop&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create User “hduser”&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo adduser hduser&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;It might ask to enter password 2 ties followed by some information, just press enter and Yes. We have given password hadoop&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Add hduser to hadoop group&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo adduser hduser hadoop&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;One line command for creating user and adding to a particular group :&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo adduser –ingroup hadoop hduser&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Add the “hduser” to sudo-ers list so that hduser can do admin tasks&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo visudo&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Add a line under&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;##Allow member of group sudo to execute any command anywhere in the format.
+    
+hduser ALL=(ALL) ALL
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Control+X yes and enter to save file. Logout and login as hduser&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;configure-ssh&#34;&gt;Configure SSH&lt;/h2&gt;
+
+&lt;p&gt;Hadoop require SSH access to manage its nodes, i.e. remote machines plus your local machine if you want to use Hadoop on it (which is what we want to do in this class). For our single node setup of Hadoop, we therefore need to configure SSH access to localhost for the hduse user we created in the previous section.&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install ssh server on your machine&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo apt-get install openssh-server&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If this did not work, then install openssh-server using Ubuntu software center by searching for openssh-server&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Generate SSH key for communication&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Just press enter for whatever is asked.&lt;/li&gt;
+&lt;li&gt;Generate public/private rsa key pair&lt;/li&gt;
+&lt;li&gt;Enter file to save the key (/home/hduser/.ssh/id_rsa):&lt;/li&gt;
+&lt;li&gt;Created directory ‘/home/hduser/.ssh’&lt;/li&gt;
+&lt;li&gt;Your identification has been saved in /home/hduser/.ssh/id_rsa&lt;/li&gt;
+&lt;li&gt;Your public key has been saved in /home/hduser/.ssh/id_rsa.pub&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Copy Public Key to Authorized_key file &amp;amp; edit the permission&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Now copy the public key to the authorized_keys file, so that ssh shpuld not require password every time&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;cat ~/.ssh/id_rsa.pub &amp;gt;&amp;gt; ~/.ssh/authorized_keys&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Change permission of the authorized_keys file to have all permission for hduser&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;chmod 700 ~/.ssh/authorized_keys&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Start SSH&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;If ssh is not running, then run it by giving the below command&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo /etc/init.d/ssh restart&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Test your SSH connectivity&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ssh localhost&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Type yes, when asked for. You should be able to connect without password. If you are asked to enter password here, then something went wrong. Please check you previous steps.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Disable IPV6&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Hadoop and IPV6 do not agree on the meaning of 0.0.0.0 address, thus it is advisable to disable IPV6 adding following lines at the end of &lt;em&gt;/etc/sysctl.conf&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /etc/sysctl.conf&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#disable ipv6
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.io.disable_ipv6 = 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Check if IPV6 is disable or not&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;cat /proc/sys/net/ipv6/conf/all/disable_ipv6&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;It should show you &lt;em&gt;0&lt;/em&gt;, after reboot it should show you &lt;em&gt;1&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&#34;install-hadoop&#34;&gt;Install Hadoop&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Download Hadoop&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Let us install hadoop 2.7.3 (hadoop-2.7.3.tar.gz). Download hadoop-2.7.3.tar.gz from &lt;a href=&#34;http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz&#34;&gt;apache&lt;/a&gt; and save it in hduser/Desktop&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Move the zip file to /usr/local/&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo mv  ~/Desktop/hadoop-2.7.3.tar.gz /usr/local/&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;cd /usr/local&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo tar –xvzf hadoop-2.7.3.tar.gz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo rm hadoop-2.7.3.tar.gz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo ln –s hadoop-2.7.3 hadoop&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop hadoop-2.7.3&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop hadoop&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod 777 hadoop-2.7.3&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Edit hadoop-env.sh and configure Java&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Add the following to &lt;em&gt;/usr/local/hadoop/etc/hadoop/hadoop-env.sh&lt;/em&gt; by &lt;strong&gt;removing&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export JAVA_HOME=${JAVA_HOME}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Editing hadoop-env.sh and &lt;strong&gt;adding the lines below&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /usr/local/hadoop/etc/hadoop/hadoop-env.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true
+export HADOOP_HOME_WARN_SUPPRESS=”TRUE”
+export JAVA_HOME=/usr/local/java
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update ~/.bashrc&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;#Set Hadoop-related environment variables
+export HADOOP_HOME=/usr/local/hadoop
+export HADOOP_PREFIX=/usr/local/hadoop
+export HADOOP_MAPRED_HOME=${HADOOP_HOME}
+export HADOOP_COMMON_HOME=${HADOOP_HOME}
+export HADOOP_HDFS_HOME=${HADOOP_HOME}
+export HADOOP_YARN_HOME=${HADOOP_HOME}
+export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
+
+#Native Path
+
+export HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_PREFIX}/lib/native
+export HADOOP_OPTS=”-Djava.library.path=$HADOOP_PREFIX/lib”
+
+#some convenient aliases and functions for running hadoop related command
+
+JAVA_HOME=/usr/local/java
+JRE_HOME=$JAVA_HOME/jre
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
+export JAVA_HOME
+export JRE_HOME
+export PATH
+
+export PATH=$PATH:$HADOOP_HOME/bin:$PATH:$HADOOP_HOME/sbin
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create a temporary directory which will be used as base location for DFS&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo mkdir –p /app/hadoop/tmp&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop /app/hadoop/tmp&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod –R 777 /app/hadoop/tmp&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update yarn-site.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/yarn-site.xml&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
+	&amp;lt;name&amp;gt;yarn.nodemanager.aux-services&amp;lt;/name&amp;gt;
+	&amp;lt;value&amp;gt;mapreduce_shuffle&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+	&amp;lt;name&amp;gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&amp;lt;/name&amp;gt;
+	&amp;lt;value&amp;gt;org.apache.hadoop.mapred.ShuffleHandler&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update core-site.xml&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/core-site.xml&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;hadoop.tmp.dir&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;/app/hadoop/tmp&amp;lt;/value&amp;gt;
+    &amp;lt;description&amp;gt;A base for other temporary directory.&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+    
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;fs.default.name&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;hdfs://localhost:9000&amp;lt;/value&amp;gt;
+    &amp;lt;description&amp;gt;The name of the default file system.
+A URI whose scheme and authority determine the FileSystem implementation. The uri’s scheme determine the config property (fs.SCHEME.impl) naming the    FileSystem implementation class. The uri’s authority is used to determine the host, port, etc. for a filesystem
+&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create mapred-site.xml from mapred-site.xml.template&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;cp /usr/local/hadoop/etc/hadoop/mapred-site.xml.template /usr/local/hadoop/etc/hadoop/mapred-site.xml&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/mapred-site.xml&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;mapreduce.framework.name&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;yarn&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create some directory&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo mkdir –p /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo mkdir –p /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update hdfs-site.html&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/hdfs-site.xml&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;dfs.replication&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;1&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+    
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;dfs.namenode.name.dir&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;file:/usr/local/hadoop/yarn_data/hdfs/namenode &amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+    
+&amp;lt;property&amp;gt;
+    &amp;lt;name&amp;gt;dfs.datanode.name.dir&amp;lt;/name&amp;gt;
+    &amp;lt;value&amp;gt;file:/usr/local/hadoop/yarn_data/hdfs/datanode &amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Format your namenode&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hadoop namenode –format&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Start your single node cluster&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;start-dfs.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;start-yarn.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;jps&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+      
     
       
         <item>

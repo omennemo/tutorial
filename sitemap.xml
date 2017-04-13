@@ -2,19 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://omennemo.github.io/tutorial/post/install-hadoop/</loc>
+    <lastmod>2017-04-13T11:12:24+05:30</lastmod>
+  </url>
+  
+  <url>
     <loc>https://omennemo.github.io/tutorial/post/install-java/</loc>
     <lastmod>2017-04-13T00:56:37+05:30</lastmod>
   </url>
   
   <url>
     <loc>https://omennemo.github.io/tutorial/</loc>
-    <lastmod>2017-04-13T00:56:37+05:30</lastmod>
+    <lastmod>2017-04-13T11:12:24+05:30</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>https://omennemo.github.io/tutorial/post/</loc>
-    <lastmod>2017-04-13T00:56:37+05:30</lastmod>
+    <lastmod>2017-04-13T11:12:24+05:30</lastmod>
     <priority>0</priority>
   </url>
   
