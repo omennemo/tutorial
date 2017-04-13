@@ -44,12 +44,9 @@
         <meta itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" content="https://omennemo.github.io/tutorial/"/>
         <meta itemprop="dateModified" content="2017-04-13T00:56:37&#43;05:30">
         <meta itemprop="headline" content="Installing Java on Ubuntu Guest">
-        <meta itemprop="description" content="INSTALL VMWare workstation
-Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.
-INSTALL UBUNTU
-Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
-JAVA Installation
-Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory">
+        <meta itemprop="description" content="INSTALL VMWare workstation Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.
+INSTALL UBUNTU Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
+JAVA Installation Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory">
         <meta itemprop="url" content="https://omennemo.github.io/tutorial/post/install-java/">
         <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
           <meta itemprop="url" content="https://omennemo.github.io/tutorial/images/default.jpg" />
@@ -76,15 +73,17 @@ Step 1:- Google Search “Java 8 download” in the internet and download 64&fra
         </header>
 
         <div class="article-body" itemprop="articleBody">
-          <p><strong>INSTALL VMWare workstation</strong></p>
+          
+
+<h2 id="install-vmware-workstation"><strong>INSTALL VMWare workstation</strong></h2>
 
 <p>Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.</p>
 
-<p><strong>INSTALL UBUNTU</strong></p>
+<h2 id="install-ubuntu"><strong>INSTALL UBUNTU</strong></h2>
 
 <p>Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)</p>
 
-<p><strong>JAVA Installation</strong></p>
+<h2 id="java-installation"><strong>JAVA Installation</strong></h2>
 
 <p>Step 1:- Google Search “Java 8 download” in the internet and download <sup>64</sup>&frasl;<sub>32</sub> bit java ( tar.gz )
 You are in ~/Downloads directory</p>
@@ -138,19 +137,14 @@ You are in ~/Downloads directory</p>
 
 <p>esc+o (to add new lines)</p>
 
-<blockquote>
-<p>JAVA_HOME=/usr/local/java/java</p>
+<pre><code>JAVA_HOME=/usr/local/java/java
+JRE_HOME=$JAVA_HOME/jre
+PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
 
-<p>JRE_HOME=$JAVA_HOME/jre</p>
-
-<p>PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</p>
-
-<p>export JAVA_HOME</p>
-
-<p>export JRE_HOME</p>
-
-<p>export PATH</p>
-</blockquote>
+export JAVA_HOME
+export JRE_HOME
+export PATH
+</code></pre>
 
 <p>:wq (To save the file and exit)</p>
 
@@ -158,11 +152,12 @@ You are in ~/Downloads directory</p>
 
 <p>Step 11:- <code>java -version</code></p>
 
-<blockquote>
-<p>java version &ldquo;1.8.0_121&rdquo;
-Java&trade; SE Runtime Environment (build 1.8.0_121-b13)
-Java HotSpot&trade; Server VM (build 25.121-b13, mixed mode)</p>
-</blockquote>
+<p>Output of above command should be :</p>
+
+<pre><code>java version &quot;1.8.0_121&quot;
+Java(TM) SE Runtime Environment (build 1.8.0_121-b13)
+Java HotSpot(TM) Server VM (build 25.121-b13, mixed mode)
+</code></pre>
 
         </div>
 
@@ -203,7 +198,16 @@ Java HotSpot&trade; Server VM (build 25.121-b13, mixed mode)</p>
   
   <div class="section">
     <header><div class="title">TableOfContents</div></header>
-    <div class="list-default"></div>
+    <div class="list-default"><nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#install-vmware-workstation"><strong>INSTALL VMWare workstation</strong></a></li>
+<li><a href="#install-ubuntu"><strong>INSTALL UBUNTU</strong></a></li>
+<li><a href="#java-installation"><strong>JAVA Installation</strong></a></li>
+</ul></li>
+</ul>
+</nav></div>
   </div>
   
 
@@ -236,12 +240,9 @@ We will use a dedicated Hadoop user account for running Hadoop. While that’s n
     <div class="detail">
       <time>Thu, Apr 13, 2017</time>
       <h2 class="title">Installing Java on Ubuntu Guest</h2>
-      <div class="summary">INSTALL VMWare workstation
-Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.
-INSTALL UBUNTU
-Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
-JAVA Installation
-Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory</div>
+      <div class="summary">INSTALL VMWare workstation Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.
+INSTALL UBUNTU Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
+JAVA Installation Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory</div>
     </div>
   </a>
 </article>
