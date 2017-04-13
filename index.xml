@@ -6,8 +6,135 @@
     <language>en-us</language>
     <author>Nimesh Vellera</author>
     <rights>(C) 2017</rights>
-    <updated>2017-04-13 14:06:21 &#43;0530 IST</updated>
+    <updated>2017-04-13 14:31:46 &#43;0530 IST</updated>
 
+    
+      
+        <item>
+          <title>Installing Hive</title>
+          <link>https://omennemo.github.io/tutorial/post/install-hive/</link>
+          <pubDate>Thu, 13 Apr 2017 14:31:46 IST</pubDate>
+          <author>Nimesh Vellera</author>
+          <guid>https://omennemo.github.io/tutorial/post/install-hive/</guid>
+          <description>
+
+&lt;h1 id=&#34;guide-to-installing-hive-on-a-hadoop-cluster&#34;&gt;Guide to installing Hive on a hadoop cluster&lt;/h1&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Create a folder called ecosystem at ~&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;mkdir ecosystem&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;cd ecosystem&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Get the Hive installation file&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;wget http://mirror.fibergrid.in/apache/hive/hive-2.1.1/apache-hive-2.1.1-bin.tar.gz&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If this command doesn&amp;rsquo;t work, please search for the installation zip file and use the same command to download the file.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Un-tar the file&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;tar -xvzf apache-hive-2.1.1-bin.tar.gz&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Remove the tar file once the file is extracted properly&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;rm apache-hive-2.1.1-bin.tar.gz&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create a soft link to the file&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;ln –s apache-hive-2.1.1-bin hive&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Update the .bashrc file&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;nano /home/hduser/.bashrc&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Add the below block to the end of the file.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;export HIVE_PATH=/home/hduser/ecosystem/hive
+export PATH=$PATH:$HIVE_HOME/bin
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Start hadoop cluster (with &lt;code&gt;start-dfs.sh&lt;/code&gt; and &lt;code&gt;start-yarn.sh&lt;/code&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Creating Hive Directories&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hdfs dfs -mkdir -p /user/hive/warehouse&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hdfs dfs -mkdir -p /tmp/hive&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hdfs dfs -chmod 777 /tmp&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hdfs dfs -chmod 777 /user/hive/warehouse&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hdfs dfs -chmod 777 /tmp/hive&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Pre-emptively remove the problematic .jar file&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;rm /home/hduser/ecosystem/hive/lib/log4j-slf4j-impl-2.4.1.jar&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Run schemaTool&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;schematool -initSchema -dbType derby&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Bring up the hive console to query the database&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hive&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&#34;crud-in-hive&#34;&gt;CRUD in Hive&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Create Employee Table&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;CREATE TABLE EMPLOYEE
+(
+    EMPNO INT,
+    NAME STRING,
+    JOB STRING,
+    BOSS INT,
+    HIREDATE TIMESTAMP,
+    SALARY FLOAT,
+    COMM FLOAT,
+    DEPENO INT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMNINATED BY ‘,’
+;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Create file in local file system /home/hduser/empData.txt with the below contents&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;7839,KING,PRESIDENT,0,1981-11-17 23:59:00,5000,0,10
+7566,JONES,MANAGER,7839,1981-04-02 23:59:00,2975,20
+7788,SCOTT,ANALYST,7566, 1982-12-09 23:59:00,3000,0,20
+7876,ADAMS,CLERK,7788,1983-01-12 23:59:00,1100,0,20
+7902,FORD,ANALYST,7566,1981-12-03 23:59:00,3000,0,20
+7369,SMITH,CLERK,7902,1980-12-17 23:59:00,800,0,20
+7698,BLACK,MANAGER,7839,1981-05-01 23:59:00,2850,0,30
+7499,ALLEN,SALESMAN,7698,1981-02-20 23:59:00,1600,300,30
+7521,WARD,SALESMAN,7698,1981-02-22 23:59:00,1250,500,30
+7654,MARTIN,SALESMAN,7698,1981-09-28 23:59:00,1250,1400,30
+7844,TURNER,SALESMAN,7698,1981-09-08 23:59:00,1500,0,30
+7900,JAMES,CLERK,7698,1981-12-03 23:59:00,950,0,10
+7782,CLARK,MANAGER,7839,1981-06-09 23:59:00,2450,0,10
+7934,MILLER,CLERK,7782,1982-01-23 23:59:00,1300,0,10
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Load data into Employee table&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;LOAD DATA LOCAL INPATH ‘/home/hduser/empData.txt’ OVERWRITE INTO TABLE EMPLOYEE;&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Execute query and check&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;SELECT * FROM EMPLOYEE;
+    
+Select * from EMPLOYEE e where e.salary in (select max(salary) from EMPLOYEE);
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+      
     
       
         <item>

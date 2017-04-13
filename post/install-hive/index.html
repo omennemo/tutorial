@@ -15,12 +15,12 @@
     <link rel="alternate" type="application/rss+xml" title="RSS" href="https://omennemo.github.io/tutorial//index.xml">
 
     
-    <title>Installing a multinode cluster - My Big Data Collection</title>
-    <meta property='og:title' content="Installing a multinode cluster - My Big Data Collection">
+    <title>Installing Hive - My Big Data Collection</title>
+    <meta property='og:title' content="Installing Hive - My Big Data Collection">
     <meta property="og:type" content="article">
     
 
-    <meta property="og:url" content="https://omennemo.github.io/tutorial/post/install-multinode/">
+    <meta property="og:url" content="https://omennemo.github.io/tutorial/post/install-hive/">
     
     
 
@@ -42,16 +42,19 @@
       <article class="single" itemscope="itemscope" itemtype="http://schema.org/Article">
 
         <meta itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" content="https://omennemo.github.io/tutorial/"/>
-        <meta itemprop="dateModified" content="2017-04-13T14:06:21&#43;05:30">
-        <meta itemprop="headline" content="Installing a multinode cluster">
-        <meta itemprop="description" content="Create machines  Create 3 nodes Load VMs (NAME: master , datanode1, datanode2) Check if nodes are ping-able (with IP address – use command ifconfig to find IP Address) Change the hostname
-sudo nano /etc/hostname
-Replace with (master, datanode1, datanode2)
- Update host file and update with IP address
-sudo nano /etc/hosts
-Delete Ubuntu line and add these with the appropriate IP addresses
-192.168.72.X master 192.168.72.Y datanode1 192.168.72.Z datanode2  Reboot">
-        <meta itemprop="url" content="https://omennemo.github.io/tutorial/post/install-multinode/">
+        <meta itemprop="dateModified" content="2017-04-13T14:31:46&#43;05:30">
+        <meta itemprop="headline" content="Installing Hive">
+        <meta itemprop="description" content="Guide to installing Hive on a hadoop cluster  Create a folder called ecosystem at ~
+mkdir ecosystem
+cd ecosystem
+ Get the Hive installation file
+wget http://mirror.fibergrid.in/apache/hive/hive-2.1.1/apache-hive-2.1.1-bin.tar.gz
+If this command doesn&rsquo;t work, please search for the installation zip file and use the same command to download the file.
+ Un-tar the file
+tar -xvzf apache-hive-2.1.1-bin.tar.gz
+ Remove the tar file once the file is extracted properly
+rm apache-hive-2.1.1-bin.tar.gz">
+        <meta itemprop="url" content="https://omennemo.github.io/tutorial/post/install-hive/">
         <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
           <meta itemprop="url" content="https://omennemo.github.io/tutorial/images/default.jpg" />
           <meta itemprop="width" content="800">
@@ -72,131 +75,126 @@ Delete Ubuntu line and add these with the appropriate IP addresses
         <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
 
         <header class="article-header">
-          <time itemprop="datePublished" pubdate="pubdate" datetime="2017-04-13T14:06:21&#43;05:30">Thu, Apr 13, 2017</time>
-          <h1 class="article-title">Installing a multinode cluster</h1>
+          <time itemprop="datePublished" pubdate="pubdate" datetime="2017-04-13T14:31:46&#43;05:30">Thu, Apr 13, 2017</time>
+          <h1 class="article-title">Installing Hive</h1>
         </header>
 
         <div class="article-body" itemprop="articleBody">
           
 
-<h1 id="create-machines">Create machines</h1>
-
-<ol>
-<li>Create 3 nodes</li>
-<li>Load VMs (NAME: master , datanode1, datanode2)</li>
-<li>Check if nodes are ping-able (with IP address – use command <code>ifconfig</code> to find IP Address)</li>
-
-<li><p>Change the hostname</p>
-
-<p><code>sudo nano /etc/hostname</code></p>
-
-<p>Replace with  (master, datanode1, datanode2)</p></li>
-
-<li><p>Update host file and update with IP address</p>
-
-<p><code>sudo nano /etc/hosts</code></p>
-
-<p>Delete Ubuntu line and add these with the appropriate IP addresses</p>
-
-<pre><code>192.168.72.X    master
-192.168.72.Y    datanode1
-192.168.72.Z    datanode2
-</code></pre></li>
-
-<li><p>Reboot</p></li>
-
-<li><p>Ping with hostname and check reachability</p></li>
-
-<li><p>Check ssh login to other hosts (without password)</p></li>
-</ol>
+<h1 id="guide-to-installing-hive-on-a-hadoop-cluster">Guide to installing Hive on a hadoop cluster</h1>
 
 <ul>
-<li><p><strong>core-site.xml (both master and datanodes</strong></p>
+<li><p>Create a folder called ecosystem at ~</p>
 
-<p>Delete 4 lines for property name <code>&lt;hadoop.tmp.dir&gt;</code>
-and change <code>localhost:9000</code> to <code>master:9000</code> in property name: <code>fs.default.name</code></p></li>
+<p><code>mkdir ecosystem</code></p>
 
-<li><p><strong>hdfs-site.xml (both master and datanodes)</strong></p>
+<p><code>cd ecosystem</code></p></li>
 
-<p>Change the replication factor from 1 to 2 (or n as appropriate) in all nodes and delete datanode property from master node and delete namenode property from all data nodes</p></li>
+<li><p>Get the Hive installation file</p>
 
-<li><p><strong>yarn-site.xml (both master and datanodes)</strong></p>
+<p><code>wget http://mirror.fibergrid.in/apache/hive/hive-2.1.1/apache-hive-2.1.1-bin.tar.gz</code></p>
 
-<pre><code>&lt;property&gt;
-        &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;
-        &lt;value&gt;master:8025&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-        &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;
-        &lt;value&gt;master:8030&lt;/value&gt;
-&lt;/property&gt;
-&lt;property&gt;
-        &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;
-        &lt;value&gt;master:8050&lt;/value&gt;
-&lt;/property&gt;
+<p>If this command doesn&rsquo;t work, please search for the installation zip file and use the same command to download the file.</p></li>
+
+<li><p>Un-tar the file</p>
+
+<p><code>tar -xvzf apache-hive-2.1.1-bin.tar.gz</code></p></li>
+
+<li><p>Remove the tar file once the file is extracted properly</p>
+
+<p><code>rm apache-hive-2.1.1-bin.tar.gz</code></p></li>
+
+<li><p>Create a soft link to the file</p>
+
+<p><code>ln –s apache-hive-2.1.1-bin hive</code></p></li>
+
+<li><p>Update the .bashrc file</p>
+
+<p><code>nano /home/hduser/.bashrc</code></p>
+
+<p>Add the below block to the end of the file.</p>
+
+<pre><code>export HIVE_PATH=/home/hduser/ecosystem/hive
+export PATH=$PATH:$HIVE_HOME/bin
 </code></pre></li>
 
-<li><p><strong>mapred-site.xml (both master and datanodes)</strong></p>
+<li><p>Start hadoop cluster (with <code>start-dfs.sh</code> and <code>start-yarn.sh</code>)</p></li>
 
-<pre><code>&lt;property&gt;
-        &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;
-        &lt;value&gt;master:10020&lt;/value&gt;
-        &lt;description&gt;
-    Host and port for Job History Server (default)
-    0.0.0.0:10020
-        &lt;/description&gt;
-&lt;/property&gt;
+<li><p>Creating Hive Directories</p>
+
+<p><code>hdfs dfs -mkdir -p /user/hive/warehouse</code></p>
+
+<p><code>hdfs dfs -mkdir -p /tmp/hive</code></p>
+
+<p><code>hdfs dfs -chmod 777 /tmp</code></p>
+
+<p><code>hdfs dfs -chmod 777 /user/hive/warehouse</code></p>
+
+<p><code>hdfs dfs -chmod 777 /tmp/hive</code></p></li>
+
+<li><p>Pre-emptively remove the problematic .jar file</p>
+
+<p><code>rm /home/hduser/ecosystem/hive/lib/log4j-slf4j-impl-2.4.1.jar</code></p></li>
+
+<li><p>Run schemaTool</p>
+
+<p><code>schematool -initSchema -dbType derby</code></p></li>
+
+<li><p>Bring up the hive console to query the database</p>
+
+<p><code>hive</code></p></li>
+</ul>
+
+<h2 id="crud-in-hive">CRUD in Hive</h2>
+
+<ul>
+<li><p>Create Employee Table</p>
+
+<pre><code>CREATE TABLE EMPLOYEE
+(
+    EMPNO INT,
+    NAME STRING,
+    JOB STRING,
+    BOSS INT,
+    HIREDATE TIMESTAMP,
+    SALARY FLOAT,
+    COMM FLOAT,
+    DEPENO INT
+)
+ROW FORMAT DELIMITED
+FIELDS TERMNINATED BY ‘,’
+;
 </code></pre></li>
 
-<li><p><strong>master only configuration:</strong></p>
+<li><p>Create file in local file system /home/hduser/empData.txt with the below contents</p>
 
-<p><code>sudo nano /usr/local/hadoop/etc/hadoop/slaves</code>
-    and add datanodes names (like datanode1 and datanode2 in our case)</p>
+<pre><code>7839,KING,PRESIDENT,0,1981-11-17 23:59:00,5000,0,10
+7566,JONES,MANAGER,7839,1981-04-02 23:59:00,2975,20
+7788,SCOTT,ANALYST,7566, 1982-12-09 23:59:00,3000,0,20
+7876,ADAMS,CLERK,7788,1983-01-12 23:59:00,1100,0,20
+7902,FORD,ANALYST,7566,1981-12-03 23:59:00,3000,0,20
+7369,SMITH,CLERK,7902,1980-12-17 23:59:00,800,0,20
+7698,BLACK,MANAGER,7839,1981-05-01 23:59:00,2850,0,30
+7499,ALLEN,SALESMAN,7698,1981-02-20 23:59:00,1600,300,30
+7521,WARD,SALESMAN,7698,1981-02-22 23:59:00,1250,500,30
+7654,MARTIN,SALESMAN,7698,1981-09-28 23:59:00,1250,1400,30
+7844,TURNER,SALESMAN,7698,1981-09-08 23:59:00,1500,0,30
+7900,JAMES,CLERK,7698,1981-12-03 23:59:00,950,0,10
+7782,CLARK,MANAGER,7839,1981-06-09 23:59:00,2450,0,10
+7934,MILLER,CLERK,7782,1982-01-23 23:59:00,1300,0,10
+</code></pre></li>
 
-<p><code>sudo nano /usr/local/hadoop/etc/hadoop/masters</code>
-    and add master names (like master in our case)</p>
+<li><p>Load data into Employee table</p>
 
-<p><code>sudo rm -rf /usr/local/hadoop/yarn_data/hdfs/namenode</code></p>
+<p><code>LOAD DATA LOCAL INPATH ‘/home/hduser/empData.txt’ OVERWRITE INTO TABLE EMPLOYEE;</code></p></li>
 
-<p><code>sudo mkdir -p /usr/local/hadoop/yarn_data/hdfs/namenode</code></p>
+<li><p>Execute query and check</p>
 
-<p><code>sudo chown -R hduser:hadoop /usr/local/hadoop/yarn_data</code></p>
-
-<p><code>sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/namenode</code></p></li>
-
-<li><p><strong>Run on all datanodes</strong></p>
-
-<p><code>sudo rm -rf /usr/local/hadoop/yarn_data/hdfs/datanode</code></p>
-
-<p><code>sudo mkdir -p /usr/local/hadoop/yarn_data/hdfs/datanode</code></p>
-
-<p><code>sudo chown -R hduser:hadoop /usr/local/hadoop/yarn_data</code></p>
-
-<p><code>sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/datanode</code></p></li>
-
-<li><p><strong>Format namenode in master</strong></p>
-
-<p><code>hadoop namenode -format</code></p></li>
-
-<li><p><strong>Start servers from scripts in master</strong></p>
-
-<p><code>start-dfs.sh</code></p>
-
-<p><code>start-yarn.sh</code></p>
-
-<p><code>jps</code></p></li>
-
-<li><p><strong>Status can be checked using the following methods</strong></p>
-
-<p><a href="http://master:8088">http://master:8088</a></p>
-
-<p><a href="http://master:50070">http://master:50070</a></p>
-
-<p><strong>OR</strong></p>
-
-<p><code>hdfs dfsadmin -report</code></p>
-
-<p>check the following path : <code>/usr/local/Hadoop/logs</code></p></li>
+<pre><code>SELECT * FROM EMPLOYEE;
+    
+Select * from EMPLOYEE e where e.salary in (select max(salary) from EMPLOYEE);
+</code></pre></li>
 </ul>
 
         </div>
@@ -206,10 +204,10 @@ and change <code>localhost:9000</code> to <code>master:9000</code> in property n
           
 
           <div class="section share">
-            <a href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-multinode%2f&t=Installing%20a%20multinode%20cluster" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
-            <a href="http://twitter.com/intent/tweet?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-multinode%2f&text=Installing%20a%20multinode%20cluster&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
-            <a href="https://plus.google.com/share?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-multinode%2f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-google-plus"></i></a>
-            <a href="http://getpocket.com/edit?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-multinode%2f&title=Installing%20a%20multinode%20cluster" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
+            <a href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hive%2f&t=Installing%20Hive" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
+            <a href="http://twitter.com/intent/tweet?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hive%2f&text=Installing%20Hive&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
+            <a href="https://plus.google.com/share?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hive%2f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-google-plus"></i></a>
+            <a href="http://getpocket.com/edit?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hive%2f&title=Installing%20Hive" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
           </div>
 
           
@@ -240,7 +238,10 @@ and change <code>localhost:9000</code> to <code>master:9000</code> in property n
     <header><div class="title">TableOfContents</div></header>
     <div class="list-default"><nav id="TableOfContents">
 <ul>
-<li><a href="#create-machines">Create machines</a></li>
+<li><a href="#guide-to-installing-hive-on-a-hadoop-cluster">Guide to installing Hive on a hadoop cluster</a>
+<ul>
+<li><a href="#crud-in-hive">CRUD in Hive</a></li>
+</ul></li>
 </ul>
 </nav></div>
   </div>
