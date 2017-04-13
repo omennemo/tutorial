@@ -195,7 +195,9 @@ export JRE_HOME
 export PATH
 
 export PATH=$PATH:$HADOOP_HOME/bin:$PATH:$HADOOP_HOME/sbin
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;source ~/.bashrc&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
 
 &lt;li&gt;&lt;p&gt;&lt;strong&gt;Create a temporary directory which will be used as base location for DFS&lt;/strong&gt;&lt;/p&gt;
 
