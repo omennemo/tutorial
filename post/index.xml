@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on My Big Data Collection</title>
+    <title>Posts on Big Data How-To</title>
     <link>https://omennemo.github.io/tutorial/post/</link>
-    <description>Recent content in Posts on My Big Data Collection</description>
+    <description>Recent content in Posts on Big Data How-To</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 13 Apr 2017 00:56:37 +0530</lastBuildDate>
