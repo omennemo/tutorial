@@ -27,11 +27,11 @@
 
 &lt;p&gt;&lt;code&gt;whoami&lt;/code&gt;   &amp;ndash; should give root&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Adding a dedicated Hadoop system user called “hduser”&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Adding a dedicated Hadoop system user called “hduser”&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)&lt;/p&gt;&lt;/li&gt;
 
-&lt;li&gt;&lt;p&gt;Create a group called hadoop&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create a group called hadoop&lt;/strong&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;code&gt;sudo  addgroup hadoop&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
 
