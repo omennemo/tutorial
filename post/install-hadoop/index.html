@@ -1,82 +1,56 @@
-<div class="single">
-  <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="generator" content="Hugo 0.18.1" />
+	<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="generator" content="Hugo 0.20" />
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Open+Sans|Marcellus+SC'>
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/solarized_dark.min.css">
-    <link rel="stylesheet" href="https://omennemo.github.io/tutorial/css/styles.css">
-    <link rel="stylesheet" href="https://omennemo.github.io/tutorial/css/custom.css">
-    <link rel="alternate" type="application/rss+xml" title="RSS" href="https://omennemo.github.io/tutorial//index.xml">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-    
-    <title>Installing Hadoop on the Ubuntu Guest - My Big Data Collection</title>
-    <meta property='og:title' content="Installing Hadoop on the Ubuntu Guest - My Big Data Collection">
-    <meta property="og:type" content="article">
-    
+  
+  <title>Installing Hadoop on the Ubuntu Guest &middot; My Big Data Collection</title>
+  
 
-    <meta property="og:url" content="https://omennemo.github.io/tutorial/post/install-hadoop/">
-    
-    
+  
+  <link rel="stylesheet" href="https://omennemo.github.io/tutorial/css/poole.css">
+  <link rel="stylesheet" href="https://omennemo.github.io/tutorial/css/syntax.css">
+  <link rel="stylesheet" href="https://omennemo.github.io/tutorial/css/hyde.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
 
-  </head>
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="/favicon.png">
 
-  <body>
+  
+  <link href="" rel="alternate" type="application/rss+xml" title="My Big Data Collection" />
+</head>
 
-    <header class="site">
-      <div class="title"><a href="https://omennemo.github.io/tutorial/">My Big Data Collection</a></div>
-    </header>
+	<body class=" ">
+		<div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <a href="https://omennemo.github.io/tutorial/"><h1>My Big Data Collection</h1></a>
+      <p class="lead">
+      An elegant open source and mobile first theme for <a href="http://hugo.spf13.com">hugo</a> made by <a href="http://twitter.com/mdo">@mdo</a>. Originally made for Jekyll.
+      </p>
+    </div>
 
-    <div class="container site">
+    <ul class="sidebar-nav">
+      <li><a href="/">Home</a> </li>
+      
+    </ul>
+
+    <p>&copy; 2017. All rights reserved. </p>
+  </div>
+</div>
 
 
-
-  <div class="row">
-    <div class="col-sm-9">
-
-      <article class="single" itemscope="itemscope" itemtype="http://schema.org/Article">
-
-        <meta itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" content="https://omennemo.github.io/tutorial/"/>
-        <meta itemprop="dateModified" content="2017-04-13T11:12:24&#43;05:30">
-        <meta itemprop="headline" content="Installing Hadoop on the Ubuntu Guest">
-        <meta itemprop="description" content="Configure User  Login as Root:
-sudo su
-whoami &ndash; should give root
- Adding a dedicated Hadoop system user called “hduser”
-We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)
- Create a group called hadoop">
-        <meta itemprop="url" content="https://omennemo.github.io/tutorial/post/install-hadoop/">
-        <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
-          <meta itemprop="url" content="https://omennemo.github.io/tutorial/images/default.jpg" />
-          <meta itemprop="width" content="800">
-          <meta itemprop="height" content="800">
-        </div>
-        <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
-          <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
-            <meta itemprop="url" content="https://omennemo.github.io/tutorial/images/logo.jpg">
-            <meta itemprop="width" content="100">
-            <meta itemprop="height" content="100">
-          </div>
-          <meta itemprop="name" content="My Big Data Collection">
-        </div>
-        <div itemprop="author" itemscope itemtype="https://schema.org/Person">
-          <meta itemprop="name" content="Nimesh Vellera">
-        </div>
-
-        <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
-
-        <header class="article-header">
-          <time itemprop="datePublished" pubdate="pubdate" datetime="2017-04-13T11:12:24&#43;05:30">Thu, Apr 13, 2017</time>
-          <h1 class="article-title">Installing Hadoop on the Ubuntu Guest</h1>
-        </header>
-
-        <div class="article-body" itemprop="articleBody">
-          
+		<div class="content container">
+			<div class="post">
+			 	<h1>Installing Hadoop on the Ubuntu Guest</h1>
+			  <span class="post-date">Thu, Apr 13, 2017</span>
+			      
 
 <h2 id="configure-user">Configure User</h2>
 
@@ -359,198 +333,10 @@ A URI whose scheme and authority determine the FileSystem implementation. The ur
 <p><code>jps</code></p></li>
 </ol>
 
-        </div>
+			</div>
 
-
-        <aside>
-          
-
-          <div class="section share">
-            <a href="http://www.facebook.com/sharer.php?src=bm&u=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f&t=Installing%20Hadoop%20on%20the%20Ubuntu%20Guest" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-facebook"></i></a>
-            <a href="http://twitter.com/intent/tweet?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f&text=Installing%20Hadoop%20on%20the%20Ubuntu%20Guest&tw_p=tweetbutton" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-twitter"></i></a>
-            <a href="https://plus.google.com/share?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-google-plus"></i></a>
-            <a href="http://getpocket.com/edit?url=https%3a%2f%2fomennemo.github.io%2ftutorial%2fpost%2finstall-hadoop%2f&title=Installing%20Hadoop%20on%20the%20Ubuntu%20Guest" onclick="window.open(this.href, 'PCwindow', 'width=550, height=350, menubar=no, toolbar=no, scrollbars=yes'); return false;"><i class="fa fa-get-pocket"></i></a>
-          </div>
-
-          
-          
-          <div id="disqus_thread"></div>
-          <script type="text/javascript">
-(function() {
-  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-  var disqus_shortname = 'datalytics-1';
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-})();
-          </script>
-          <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-          
-          
-        </aside>
-
-      </article>
-    </div>
-
-    <div class="col-sm-3">
-      <aside class="site">
-
-  
-  <div class="section">
-    <header><div class="title">TableOfContents</div></header>
-    <div class="list-default"><nav id="TableOfContents">
-<ul>
-<li>
-<ul>
-<li><a href="#configure-user">Configure User</a></li>
-<li><a href="#configure-ssh">Configure SSH</a></li>
-<li><a href="#install-hadoop">Install Hadoop</a></li>
-</ul></li>
-</ul>
-</nav></div>
-  </div>
-  
-
-  
-
-  <div class="section">
-    <header><div class="title">LatestPosts</div></header>
-    <div class="content">
-      
-      <div class="sm"><article class="li">
-  <a href="https://omennemo.github.io/tutorial/post/install-hive/" class="clearfix">
-    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
-    <div class="detail">
-      <time>Thu, Apr 13, 2017</time>
-      <h2 class="title">Installing Hive</h2>
-      <div class="summary">Guide to installing Hive on a hadoop cluster  Create a folder called ecosystem at ~
-mkdir ecosystem
-cd ecosystem
- Get the Hive installation file
-wget http://mirror.fibergrid.in/apache/hive/hive-2.1.1/apache-hive-2.1.1-bin.tar.gz
-If this command doesn&rsquo;t work, please search for the installation zip file and use the same command to download the file.
- Un-tar the file
-tar -xvzf apache-hive-2.1.1-bin.tar.gz
- Remove the tar file once the file is extracted properly
-rm apache-hive-2.1.1-bin.tar.gz</div>
-    </div>
-  </a>
-</article>
-</div>
-      
-      <div class="sm"><article class="li">
-  <a href="https://omennemo.github.io/tutorial/post/install-multinode/" class="clearfix">
-    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
-    <div class="detail">
-      <time>Thu, Apr 13, 2017</time>
-      <h2 class="title">Installing a multinode cluster</h2>
-      <div class="summary">Create machines  Create 3 nodes Load VMs (NAME: master , datanode1, datanode2) Check if nodes are ping-able (with IP address – use command ifconfig to find IP Address) Change the hostname
-sudo nano /etc/hostname
-Replace with (master, datanode1, datanode2)
- Update host file and update with IP address
-sudo nano /etc/hosts
-Delete Ubuntu line and add these with the appropriate IP addresses
-192.168.72.X master 192.168.72.Y datanode1 192.168.72.Z datanode2  Reboot</div>
-    </div>
-  </a>
-</article>
-</div>
-      
-      <div class="sm"><article class="li">
-  <a href="https://omennemo.github.io/tutorial/post/install-hadoop/" class="clearfix">
-    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
-    <div class="detail">
-      <time>Thu, Apr 13, 2017</time>
-      <h2 class="title">Installing Hadoop on the Ubuntu Guest</h2>
-      <div class="summary">Configure User  Login as Root:
-sudo su
-whoami &ndash; should give root
- Adding a dedicated Hadoop system user called “hduser”
-We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)
- Create a group called hadoop</div>
-    </div>
-  </a>
-</article>
-</div>
-      
-      <div class="sm"><article class="li">
-  <a href="https://omennemo.github.io/tutorial/post/install-java/" class="clearfix">
-    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
-    <div class="detail">
-      <time>Thu, Apr 13, 2017</time>
-      <h2 class="title">Installing Java on Ubuntu Guest</h2>
-      <div class="summary">INSTALL VMWare workstation Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.
-INSTALL UBUNTU Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
-JAVA Installation Step 1:- Google Search “Java 8 download” in the internet and download 64&frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory</div>
-    </div>
-  </a>
-</article>
-</div>
-      
-      <div class="sm"><article class="li">
-  <a href="https://omennemo.github.io/tutorial/" class="clearfix">
-    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
-    <div class="detail">
-      <time>Thu, Apr 13, 2017</time>
-      <h2 class="title">My Big Data Collection</h2>
-      <div class="summary"></div>
-    </div>
-  </a>
-</article>
-</div>
-      
-      <div class="sm"><article class="li">
-  <a href="https://omennemo.github.io/tutorial/post/" class="clearfix">
-    <div class="image" style="background-image: url(https://omennemo.github.io/tutorial/images/default.jpg);"></div>
-    <div class="detail">
-      <time>Thu, Apr 13, 2017</time>
-      <h2 class="title">Posts</h2>
-      <div class="summary"></div>
-    </div>
-  </a>
-</article>
-</div>
-      
-    </div>
-  </div>
-
-  
-  <div class="section taxonomies">
-    <header><div class="title">category</div></header>
-    <div class="content">
-      
-    </div>
-  </div>
-  
-  <div class="section taxonomies">
-    <header><div class="title">tag</div></header>
-    <div class="content">
-      
-    </div>
-  </div>
-  
-
-</aside>
-
-    </div>
-
-  </div>
-
-      </div>
-
-    <footer class="site">
-      <p>&copy; 2017 My Big Data Collection</p>
-      <p>Powered by <a href="http://gohugo.io" target="_blank" rel="nofollow">Hugo</a>, Theme <a href="https://github.com/dim0627/hugo_theme_robust" target="_blank" rel="nofollow">robust</a> designed by <a href="http://yet.unresolved.xyz" target="_blank" rel="nofollow">Daisuke Tsuji</a></p>
-    </footer>
-
-    <script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/highlight.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
-
-    
+			
+		</div>
 
   </body>
 </html>
-
-</div>

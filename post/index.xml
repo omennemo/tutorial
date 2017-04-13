@@ -1,662 +1,73 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>My Big Data Collection </title>
-    <link>https://omennemo.github.io/tutorial/post/index.xml</link>
+    <title>Posts on My Big Data Collection</title>
+    <link>https://omennemo.github.io/tutorial/post/</link>
+    <description>Recent content in Posts on My Big Data Collection</description>
+    <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <author>Nimesh Vellera</author>
-    <rights>(C) 2017</rights>
-    <updated>2017-04-13 14:31:46 &#43;0530 IST</updated>
-
+    <lastBuildDate>Thu, 13 Apr 2017 00:56:37 +0530</lastBuildDate>
     
+	<atom:link href="https://omennemo.github.io/tutorial/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Installing Java on Ubuntu Guest</title>
+      <link>https://omennemo.github.io/tutorial/post/install-java/</link>
+      <pubDate>Thu, 13 Apr 2017 00:56:37 +0530</pubDate>
       
-        <item>
-          <title>Installing Hive</title>
-          <link>https://omennemo.github.io/tutorial/post/install-hive/</link>
-          <pubDate>Thu, 13 Apr 2017 14:31:46 IST</pubDate>
-          <author>Nimesh Vellera</author>
-          <guid>https://omennemo.github.io/tutorial/post/install-hive/</guid>
-          <description>
-
-&lt;h1 id=&#34;guide-to-installing-hive-on-a-hadoop-cluster&#34;&gt;Guide to installing Hive on a hadoop cluster&lt;/h1&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Create a folder called ecosystem at ~&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;mkdir ecosystem&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;cd ecosystem&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Get the Hive installation file&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;wget http://mirror.fibergrid.in/apache/hive/hive-2.1.1/apache-hive-2.1.1-bin.tar.gz&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;If this command doesn&amp;rsquo;t work, please search for the installation zip file and use the same command to download the file.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Un-tar the file&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;tar -xvzf apache-hive-2.1.1-bin.tar.gz&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Remove the tar file once the file is extracted properly&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;rm apache-hive-2.1.1-bin.tar.gz&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Create a soft link to the file&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;ln –s apache-hive-2.1.1-bin hive&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Update the .bashrc file&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;nano /home/hduser/.bashrc&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Add the below block to the end of the file.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export HIVE_PATH=/home/hduser/ecosystem/hive
-export PATH=$PATH:$HIVE_HOME/bin
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Start hadoop cluster (with &lt;code&gt;start-dfs.sh&lt;/code&gt; and &lt;code&gt;start-yarn.sh&lt;/code&gt;)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Creating Hive Directories&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hdfs dfs -mkdir -p /user/hive/warehouse&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hdfs dfs -mkdir -p /tmp/hive&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hdfs dfs -chmod 777 /tmp&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hdfs dfs -chmod 777 /user/hive/warehouse&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hdfs dfs -chmod 777 /tmp/hive&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Pre-emptively remove the problematic .jar file&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;rm /home/hduser/ecosystem/hive/lib/log4j-slf4j-impl-2.4.1.jar&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Run schemaTool&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;schematool -initSchema -dbType derby&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Bring up the hive console to query the database&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hive&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;crud-in-hive&#34;&gt;CRUD in Hive&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Create Employee Table&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;CREATE TABLE EMPLOYEE
-(
-    EMPNO INT,
-    NAME STRING,
-    JOB STRING,
-    BOSS INT,
-    HIREDATE TIMESTAMP,
-    SALARY FLOAT,
-    COMM FLOAT,
-    DEPENO INT
-)
-ROW FORMAT DELIMITED
-FIELDS TERMNINATED BY ‘,’
-;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Create file in local file system /home/hduser/empData.txt with the below contents&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;7839,KING,PRESIDENT,0,1981-11-17 23:59:00,5000,0,10
-7566,JONES,MANAGER,7839,1981-04-02 23:59:00,2975,20
-7788,SCOTT,ANALYST,7566, 1982-12-09 23:59:00,3000,0,20
-7876,ADAMS,CLERK,7788,1983-01-12 23:59:00,1100,0,20
-7902,FORD,ANALYST,7566,1981-12-03 23:59:00,3000,0,20
-7369,SMITH,CLERK,7902,1980-12-17 23:59:00,800,0,20
-7698,BLACK,MANAGER,7839,1981-05-01 23:59:00,2850,0,30
-7499,ALLEN,SALESMAN,7698,1981-02-20 23:59:00,1600,300,30
-7521,WARD,SALESMAN,7698,1981-02-22 23:59:00,1250,500,30
-7654,MARTIN,SALESMAN,7698,1981-09-28 23:59:00,1250,1400,30
-7844,TURNER,SALESMAN,7698,1981-09-08 23:59:00,1500,0,30
-7900,JAMES,CLERK,7698,1981-12-03 23:59:00,950,0,10
-7782,CLARK,MANAGER,7839,1981-06-09 23:59:00,2450,0,10
-7934,MILLER,CLERK,7782,1982-01-23 23:59:00,1300,0,10
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Load data into Employee table&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;LOAD DATA LOCAL INPATH ‘/home/hduser/empData.txt’ OVERWRITE INTO TABLE EMPLOYEE;&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Execute query and check&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;SELECT * FROM EMPLOYEE;
+      <guid>https://omennemo.github.io/tutorial/post/install-java/</guid>
+      <description>INSTALL VMWare workstation Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.
+INSTALL UBUNTU Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)
+JAVA Installation Step 1:- Google Search “Java 8 download” in the internet and download 64&amp;frasl;32 bit java ( tar.gz ) You are in ~/Downloads directory</description>
+    </item>
     
-Select * from EMPLOYEE e where e.salary in (select max(salary) from EMPLOYEE);
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
+    <item>
+      <title>Installing Hadoop on the Ubuntu Guest</title>
+      <link>https://omennemo.github.io/tutorial/post/install-hadoop/</link>
+      <pubDate>Thu, 13 Apr 2017 11:12:24 +0530</pubDate>
       
+      <guid>https://omennemo.github.io/tutorial/post/install-hadoop/</guid>
+      <description>Configure User  Login as Root:
+sudo su
+whoami &amp;ndash; should give root
+ Adding a dedicated Hadoop system user called “hduser”
+We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)
+ Create a group called hadoop</description>
+    </item>
     
+    <item>
+      <title>Installing a multinode cluster</title>
+      <link>https://omennemo.github.io/tutorial/post/install-multinode/</link>
+      <pubDate>Thu, 13 Apr 2017 14:06:21 +0530</pubDate>
       
-        <item>
-          <title>Installing a multinode cluster</title>
-          <link>https://omennemo.github.io/tutorial/post/install-multinode/</link>
-          <pubDate>Thu, 13 Apr 2017 14:06:21 IST</pubDate>
-          <author>Nimesh Vellera</author>
-          <guid>https://omennemo.github.io/tutorial/post/install-multinode/</guid>
-          <description>
-
-&lt;h1 id=&#34;create-machines&#34;&gt;Create machines&lt;/h1&gt;
-
-&lt;ol&gt;
-&lt;li&gt;Create 3 nodes&lt;/li&gt;
-&lt;li&gt;Load VMs (NAME: master , datanode1, datanode2)&lt;/li&gt;
-&lt;li&gt;Check if nodes are ping-able (with IP address – use command &lt;code&gt;ifconfig&lt;/code&gt; to find IP Address)&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Change the hostname&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo nano /etc/hostname&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Replace with  (master, datanode1, datanode2)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Update host file and update with IP address&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo nano /etc/hosts&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Delete Ubuntu line and add these with the appropriate IP addresses&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;192.168.72.X    master
-192.168.72.Y    datanode1
-192.168.72.Z    datanode2
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Reboot&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Ping with hostname and check reachability&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Check ssh login to other hosts (without password)&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;core-site.xml (both master and datanodes&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Delete 4 lines for property name &lt;code&gt;&amp;lt;hadoop.tmp.dir&amp;gt;&lt;/code&gt;
-and change &lt;code&gt;localhost:9000&lt;/code&gt; to &lt;code&gt;master:9000&lt;/code&gt; in property name: &lt;code&gt;fs.default.name&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;hdfs-site.xml (both master and datanodes)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Change the replication factor from 1 to 2 (or n as appropriate) in all nodes and delete datanode property from master node and delete namenode property from all data nodes&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;yarn-site.xml (both master and datanodes)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
-        &amp;lt;name&amp;gt;yarn.resourcemanager.resource-tracker.address&amp;lt;/name&amp;gt;
-        &amp;lt;value&amp;gt;master:8025&amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-&amp;lt;property&amp;gt;
-        &amp;lt;name&amp;gt;yarn.resourcemanager.scheduler.address&amp;lt;/name&amp;gt;
-        &amp;lt;value&amp;gt;master:8030&amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-&amp;lt;property&amp;gt;
-        &amp;lt;name&amp;gt;yarn.resourcemanager.address&amp;lt;/name&amp;gt;
-        &amp;lt;value&amp;gt;master:8050&amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;mapred-site.xml (both master and datanodes)&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
-        &amp;lt;name&amp;gt;mapreduce.jobhistory.address&amp;lt;/name&amp;gt;
-        &amp;lt;value&amp;gt;master:10020&amp;lt;/value&amp;gt;
-        &amp;lt;description&amp;gt;
-    Host and port for Job History Server (default)
-    0.0.0.0:10020
-        &amp;lt;/description&amp;gt;
-&amp;lt;/property&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;master only configuration:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo nano /usr/local/hadoop/etc/hadoop/slaves&lt;/code&gt;
-    and add datanodes names (like datanode1 and datanode2 in our case)&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo nano /usr/local/hadoop/etc/hadoop/masters&lt;/code&gt;
-    and add master names (like master in our case)&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo rm -rf /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo mkdir -p /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chown -R hduser:hadoop /usr/local/hadoop/yarn_data&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Run on all datanodes&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo rm -rf /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo mkdir -p /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chown -R hduser:hadoop /usr/local/hadoop/yarn_data&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Format namenode in master&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hadoop namenode -format&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Start servers from scripts in master&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;start-dfs.sh&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;start-yarn.sh&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;jps&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Status can be checked using the following methods&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://master:8088&#34;&gt;http://master:8088&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://master:50070&#34;&gt;http://master:50070&lt;/a&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;OR&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hdfs dfsadmin -report&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;check the following path : &lt;code&gt;/usr/local/Hadoop/logs&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-</description>
-        </item>
+      <guid>https://omennemo.github.io/tutorial/post/install-multinode/</guid>
+      <description>Create machines  Create 3 nodes Load VMs (NAME: master , datanode1, datanode2) Check if nodes are ping-able (with IP address – use command ifconfig to find IP Address) Change the hostname
+sudo nano /etc/hostname
+Replace with (master, datanode1, datanode2)
+ Update host file and update with IP address
+sudo nano /etc/hosts
+Delete Ubuntu line and add these with the appropriate IP addresses
+192.168.72.X master 192.168.72.Y datanode1 192.168.72.Z datanode2  Reboot</description>
+    </item>
+    
+    <item>
+      <title>Installing Hive</title>
+      <link>https://omennemo.github.io/tutorial/post/install-hive/</link>
+      <pubDate>Thu, 13 Apr 2017 14:31:46 +0530</pubDate>
       
+      <guid>https://omennemo.github.io/tutorial/post/install-hive/</guid>
+      <description>Guide to installing Hive on a hadoop cluster  Create a folder called ecosystem at ~
+mkdir ecosystem
+cd ecosystem
+ Get the Hive installation file
+wget http://mirror.fibergrid.in/apache/hive/hive-2.1.1/apache-hive-2.1.1-bin.tar.gz
+If this command doesn&amp;rsquo;t work, please search for the installation zip file and use the same command to download the file.
+ Un-tar the file
+tar -xvzf apache-hive-2.1.1-bin.tar.gz
+ Remove the tar file once the file is extracted properly
+rm apache-hive-2.1.1-bin.tar.gz</description>
+    </item>
     
-      
-        <item>
-          <title>Installing Hadoop on the Ubuntu Guest</title>
-          <link>https://omennemo.github.io/tutorial/post/install-hadoop/</link>
-          <pubDate>Thu, 13 Apr 2017 11:12:24 IST</pubDate>
-          <author>Nimesh Vellera</author>
-          <guid>https://omennemo.github.io/tutorial/post/install-hadoop/</guid>
-          <description>
-
-&lt;h2 id=&#34;configure-user&#34;&gt;Configure User&lt;/h2&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Login as Root:&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo su&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;whoami&lt;/code&gt;   &amp;ndash; should give root&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Adding a dedicated Hadoop system user called “hduser”&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;We will use a dedicated Hadoop user account for running Hadoop. While that’s not required it is recommended because it helps to separate the Hadoop installation from other software applications and user accounts running on the same machines (this: security, permission and backups etc.)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create a group called hadoop&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo  addgroup hadoop&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create User “hduser”&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo adduser hduser&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;It might ask to enter password 2 ties followed by some information, just press enter and Yes. We have given password hadoop&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Add hduser to hadoop group&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo adduser hduser hadoop&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;One line command for creating user and adding to a particular group :&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo adduser –ingroup hadoop hduser&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Add the “hduser” to sudo-ers list so that hduser can do admin tasks&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo visudo&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Add a line under&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;##Allow member of group sudo to execute any command anywhere in the format.
-    
-hduser ALL=(ALL) ALL
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Control+X yes and enter to save file. Logout and login as hduser&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&#34;configure-ssh&#34;&gt;Configure SSH&lt;/h2&gt;
-
-&lt;p&gt;Hadoop require SSH access to manage its nodes, i.e. remote machines plus your local machine if you want to use Hadoop on it (which is what we want to do in this class). For our single node setup of Hadoop, we therefore need to configure SSH access to localhost for the hduse user we created in the previous section.&lt;/p&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Install ssh server on your machine&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo apt-get install openssh-server&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;If this did not work, then install openssh-server using Ubuntu software center by searching for openssh-server&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Generate SSH key for communication&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;ssh-keygen&lt;/code&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;Just press enter for whatever is asked.&lt;/li&gt;
-&lt;li&gt;Generate public/private rsa key pair&lt;/li&gt;
-&lt;li&gt;Enter file to save the key (/home/hduser/.ssh/id_rsa):&lt;/li&gt;
-&lt;li&gt;Created directory ‘/home/hduser/.ssh’&lt;/li&gt;
-&lt;li&gt;Your identification has been saved in /home/hduser/.ssh/id_rsa&lt;/li&gt;
-&lt;li&gt;Your public key has been saved in /home/hduser/.ssh/id_rsa.pub&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Copy Public Key to Authorized_key file &amp;amp; edit the permission&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Now copy the public key to the authorized_keys file, so that ssh shpuld not require password every time&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;cat ~/.ssh/id_rsa.pub &amp;gt;&amp;gt; ~/.ssh/authorized_keys&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Change permission of the authorized_keys file to have all permission for hduser&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;chmod 700 ~/.ssh/authorized_keys&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Start SSH&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;If ssh is not running, then run it by giving the below command&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo /etc/init.d/ssh restart&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Test your SSH connectivity&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;ssh localhost&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Type yes, when asked for. You should be able to connect without password. If you are asked to enter password here, then something went wrong. Please check you previous steps.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Disable IPV6&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Hadoop and IPV6 do not agree on the meaning of 0.0.0.0 address, thus it is advisable to disable IPV6 adding following lines at the end of &lt;em&gt;/etc/sysctl.conf&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo nano /etc/sysctl.conf&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#disable ipv6
-net.ipv6.conf.all.disable_ipv6 = 1
-net.ipv6.conf.default.disable_ipv6 = 1
-net.ipv6.conf.io.disable_ipv6 = 1
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Check if IPV6 is disable or not&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;cat /proc/sys/net/ipv6/conf/all/disable_ipv6&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;It should show you &lt;em&gt;0&lt;/em&gt;, after reboot it should show you &lt;em&gt;1&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&#34;install-hadoop&#34;&gt;Install Hadoop&lt;/h2&gt;
-
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Download Hadoop&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Let us install hadoop 2.7.3 (hadoop-2.7.3.tar.gz). Download hadoop-2.7.3.tar.gz from &lt;a href=&#34;http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-2.7.3/hadoop-2.7.3.tar.gz&#34;&gt;apache&lt;/a&gt; and save it in hduser/Desktop&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Move the zip file to /usr/local/&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo mv  ~/Desktop/hadoop-2.7.3.tar.gz /usr/local/&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;cd /usr/local&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo tar –xvzf hadoop-2.7.3.tar.gz&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo rm hadoop-2.7.3.tar.gz&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo ln –s hadoop-2.7.3 hadoop&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop hadoop-2.7.3&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop hadoop&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chmod 777 hadoop-2.7.3&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Edit hadoop-env.sh and configure Java&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Add the following to &lt;em&gt;/usr/local/hadoop/etc/hadoop/hadoop-env.sh&lt;/em&gt; by &lt;strong&gt;removing&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export JAVA_HOME=${JAVA_HOME}
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Editing hadoop-env.sh and &lt;strong&gt;adding the lines below&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo nano /usr/local/hadoop/etc/hadoop/hadoop-env.sh&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;export HADOOP_OPTS=-Djava.net.preferIPv4Stack=true
-export HADOOP_HOME_WARN_SUPPRESS=”TRUE”
-export JAVA_HOME=/usr/local/java
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update ~/.bashrc&lt;/strong&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;#Set Hadoop-related environment variables
-export HADOOP_HOME=/usr/local/hadoop
-export HADOOP_PREFIX=/usr/local/hadoop
-export HADOOP_MAPRED_HOME=${HADOOP_HOME}
-export HADOOP_COMMON_HOME=${HADOOP_HOME}
-export HADOOP_HDFS_HOME=${HADOOP_HOME}
-export HADOOP_YARN_HOME=${HADOOP_HOME}
-export HADOOP_CONF_DIR=${HADOOP_HOME}/etc/hadoop
-
-#Native Path
-
-export HADOOP_COMMON_LIB_NATIVE_DIR=${HADOOP_PREFIX}/lib/native
-export HADOOP_OPTS=”-Djava.library.path=$HADOOP_PREFIX/lib”
-
-#some convenient aliases and functions for running hadoop related command
-
-JAVA_HOME=/usr/local/java
-JRE_HOME=$JAVA_HOME/jre
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-export JAVA_HOME
-export JRE_HOME
-export PATH
-
-export PATH=$PATH:$HADOOP_HOME/bin:$PATH:$HADOOP_HOME/sbin
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;&lt;code&gt;source ~/.bashrc&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create a temporary directory which will be used as base location for DFS&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo mkdir –p /app/hadoop/tmp&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop /app/hadoop/tmp&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chmod –R 777 /app/hadoop/tmp&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update yarn-site.xml&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/yarn-site.xml&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
-	&amp;lt;name&amp;gt;yarn.nodemanager.aux-services&amp;lt;/name&amp;gt;
-	&amp;lt;value&amp;gt;mapreduce_shuffle&amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-&amp;lt;property&amp;gt;
-	&amp;lt;name&amp;gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&amp;lt;/name&amp;gt;
-	&amp;lt;value&amp;gt;org.apache.hadoop.mapred.ShuffleHandler&amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update core-site.xml&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/core-site.xml&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
-    &amp;lt;name&amp;gt;hadoop.tmp.dir&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;/app/hadoop/tmp&amp;lt;/value&amp;gt;
-    &amp;lt;description&amp;gt;A base for other temporary directory.&amp;lt;/description&amp;gt;
-&amp;lt;/property&amp;gt;
-    
-&amp;lt;property&amp;gt;
-    &amp;lt;name&amp;gt;fs.default.name&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;hdfs://localhost:9000&amp;lt;/value&amp;gt;
-    &amp;lt;description&amp;gt;The name of the default file system.
-A URI whose scheme and authority determine the FileSystem implementation. The uri’s scheme determine the config property (fs.SCHEME.impl) naming the    FileSystem implementation class. The uri’s authority is used to determine the host, port, etc. for a filesystem
-&amp;lt;/description&amp;gt;
-&amp;lt;/property&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create mapred-site.xml from mapred-site.xml.template&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;cp /usr/local/hadoop/etc/hadoop/mapred-site.xml.template /usr/local/hadoop/etc/hadoop/mapred-site.xml&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/mapred-site.xml&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
-    &amp;lt;name&amp;gt;mapreduce.framework.name&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;yarn&amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Create some directory&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo mkdir –p /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo mkdir –p /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chown –R hduser:hadoop /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Update hdfs-site.html&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;nano /usr/local/hadoop/etc/hadoop/hdfs-site.xml&lt;/code&gt;&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
-    &amp;lt;name&amp;gt;dfs.replication&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;1&amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-    
-&amp;lt;property&amp;gt;
-    &amp;lt;name&amp;gt;dfs.namenode.name.dir&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;file:/usr/local/hadoop/yarn_data/hdfs/namenode &amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-    
-&amp;lt;property&amp;gt;
-    &amp;lt;name&amp;gt;dfs.datanode.name.dir&amp;lt;/name&amp;gt;
-    &amp;lt;value&amp;gt;file:/usr/local/hadoop/yarn_data/hdfs/datanode &amp;lt;/value&amp;gt;
-&amp;lt;/property&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Format your namenode&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;hadoop namenode –format&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Start your single node cluster&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;start-dfs.sh&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;start-yarn.sh&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;jps&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ol&gt;
-</description>
-        </item>
-      
-    
-      
-        <item>
-          <title>Installing Java on Ubuntu Guest</title>
-          <link>https://omennemo.github.io/tutorial/post/install-java/</link>
-          <pubDate>Thu, 13 Apr 2017 00:56:37 IST</pubDate>
-          <author>Nimesh Vellera</author>
-          <guid>https://omennemo.github.io/tutorial/post/install-java/</guid>
-          <description>
-
-&lt;h2 id=&#34;install-vmware-workstation&#34;&gt;&lt;strong&gt;INSTALL VMWare workstation&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;Search VM Ware workstation for windows and install. If required enable virtualization in BIOS to enable your laptop or desktop for VM.&lt;/p&gt;
-
-&lt;h2 id=&#34;install-ubuntu&#34;&gt;&lt;strong&gt;INSTALL UBUNTU&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;Search for the ISO file for Ubuntu 16.04 from internet and download iso image (64 bit). Preferably 16.04 (16.10 has some issue)&lt;/p&gt;
-
-&lt;h2 id=&#34;java-installation&#34;&gt;&lt;strong&gt;JAVA Installation&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;Step 1:- Google Search “Java 8 download” in the internet and download &lt;sup&gt;64&lt;/sup&gt;&amp;frasl;&lt;sub&gt;32&lt;/sub&gt; bit java ( tar.gz )
-You are in ~/Downloads directory&lt;/p&gt;
-
-&lt;p&gt;Step 2:&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo cp jdk-8u121-linux-x64.tar.gz /usr/local&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;(coping tar file from Downloads directory to /usr/local/.)&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;cd /usr/local&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 3:-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo tar -xvzf jdk-8u121-linux-x64.tar.gz&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 4:-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo rm jdk-8u121-linux-x64.tar.gz&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 5:-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo ln -s jdk1.8.0_121 java&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;(rm -r java if symbolic link error)&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo chmod 777 jdk1.8.0_121&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 6:-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo update-alternatives --install &#39;&#39;/usr/bin/java&amp;quot; &amp;quot;java&amp;quot; &amp;quot;/usr/local/java/bin/java&amp;quot; 1&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 7:-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo update-alternatives --install &#39;&#39;/usr/bin/javac&amp;quot; &amp;quot;javac&amp;quot; &amp;quot;/usr/local/java/bin/javac&amp;quot; 1&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 8:-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo update-alternatives --install &#39;&#39;/usr/bin/javaws&amp;quot; &amp;quot;javaws&amp;quot; &amp;quot;/usr/local/java/bin/javaws&amp;quot; 1&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 9 :-&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo update-alternatives --set java /usr/local/java/bin/java&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo update-alternatives --set javac /usr/local/java/bin/javac&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo update-alternatives --set javaws /usr/local/java/bin/javaws&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;sudo vi  ~/.bashrc&lt;/code&gt;
-(Write at the end below script)&lt;/p&gt;
-
-&lt;p&gt;esc+o (to add new lines)&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;JAVA_HOME=/usr/local/java/java
-JRE_HOME=$JAVA_HOME/jre
-PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin
-
-export JAVA_HOME
-export JRE_HOME
-export PATH
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;:wq (To save the file and exit)&lt;/p&gt;
-
-&lt;p&gt;Step 10:- &lt;code&gt;source ~/.bashrc&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Step 11:- &lt;code&gt;java -version&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;Output of above command should be :&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;java version &amp;quot;1.8.0_121&amp;quot;
-Java(TM) SE Runtime Environment (build 1.8.0_121-b13)
-Java HotSpot(TM) Server VM (build 25.121-b13, mixed mode)
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-        </item>
-      
-    
-
   </channel>
 </rss>
