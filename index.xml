@@ -6,8 +6,140 @@
     <language>en-us</language>
     <author>Nimesh Vellera</author>
     <rights>(C) 2017</rights>
-    <updated>2017-04-13 11:12:24 &#43;0530 IST</updated>
+    <updated>2017-04-13 14:06:21 &#43;0530 IST</updated>
 
+    
+      
+        <item>
+          <title>Installing a multinode cluster</title>
+          <link>https://omennemo.github.io/tutorial/post/install-multinode/</link>
+          <pubDate>Thu, 13 Apr 2017 14:06:21 IST</pubDate>
+          <author>Nimesh Vellera</author>
+          <guid>https://omennemo.github.io/tutorial/post/install-multinode/</guid>
+          <description>
+
+&lt;h1 id=&#34;create-machines&#34;&gt;Create machines&lt;/h1&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Create 3 nodes&lt;/li&gt;
+&lt;li&gt;Load VMs (NAME: master , datanode1, datanode2)&lt;/li&gt;
+&lt;li&gt;Check if nodes are ping-able (with IP address – use command &lt;code&gt;ifconfig&lt;/code&gt; to find IP Address)&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Change the hostname&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /etc/hostname&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Replace with  (master, datanode1, datanode2)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Update host file and update with IP address&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /etc/hosts&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Delete Ubuntu line and add these with the appropriate IP addresses&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;192.168.72.X    master
+192.168.72.Y    datanode1
+192.168.72.Z    datanode2
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Reboot&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Ping with hostname and check reachability&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Check ssh login to other hosts (without password)&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;core-site.xml (both master and datanodes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Delete 4 lines for property name &lt;code&gt;&amp;lt;hadoop.tmp.dir&amp;gt;&lt;/code&gt;
+and change &lt;code&gt;localhost:9000&lt;/code&gt; to &lt;code&gt;master:9000&lt;/code&gt; in property name: &lt;code&gt;fs.default.name&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;hdfs-site.xml (both master and datanodes)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Change the replication factor from 1 to 2 (or n as appropriate) in all nodes and delete datanode property from master node and delete namenode property from all data nodes&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;yarn-site.xml (both master and datanodes)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
+        &amp;lt;name&amp;gt;yarn.resourcemanager.resource-tracker.address&amp;lt;/name&amp;gt;
+        &amp;lt;value&amp;gt;master:8025&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+        &amp;lt;name&amp;gt;yarn.resourcemanager.scheduler.address&amp;lt;/name&amp;gt;
+        &amp;lt;value&amp;gt;master:8030&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+        &amp;lt;name&amp;gt;yarn.resourcemanager.address&amp;lt;/name&amp;gt;
+        &amp;lt;value&amp;gt;master:8050&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;mapred-site.xml (both master and datanodes)&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;property&amp;gt;
+        &amp;lt;name&amp;gt;mapreduce.jobhistory.address&amp;lt;/name&amp;gt;
+        &amp;lt;value&amp;gt;master:10020&amp;lt;/value&amp;gt;
+        &amp;lt;description&amp;gt;
+    Host and port for Job History Server (default)
+    0.0.0.0:10020
+        &amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;master only configuration:&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /usr/local/hadoop/etc/hadoop/slaves&lt;/code&gt;
+    and add datanodes names (like datanode1 and datanode2 in our case)&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo nano /usr/local/hadoop/etc/hadoop/masters&lt;/code&gt;
+    and add master names (like master in our case)&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo rm -rf /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo mkdir -p /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chown -R hduser:hadoop /usr/local/hadoop/yarn_data&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/namenode&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Run on all datanodes&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo rm -rf /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo mkdir -p /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chown -R hduser:hadoop /usr/local/hadoop/yarn_data&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;sudo chmod 777 /usr/local/hadoop/yarn_data/hdfs/datanode&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Format namenode in master&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hadoop namenode -format&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Start servers from scripts in master&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;start-dfs.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;start-yarn.sh&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;jps&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;Status can be checked using the following methods&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://master:8088&#34;&gt;http://master:8088&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://master:50070&#34;&gt;http://master:50070&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;OR&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;hdfs dfsadmin -report&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;check the following path : &lt;code&gt;/usr/local/Hadoop/logs&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+      
     
       
         <item>
