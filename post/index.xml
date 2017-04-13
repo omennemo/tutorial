@@ -40,11 +40,14 @@ cd /usr/local&lt;/p&gt;
 &lt;p&gt;Step 5:-  sudo ln -s jdk1.8.0_121 java (rm -r java if symbolic link error)
     sudo chmod 777 jdk1.8.0_121&lt;/p&gt;
 
-&lt;p&gt;Step 6:-  &amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/java&amp;rdquo; &amp;ldquo;java&amp;rdquo; &amp;ldquo;/usr/local/java/bin/java&amp;rdquo; 1&lt;/p&gt;
+&lt;p&gt;Step 6:-&lt;br /&gt;
+&amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/java&amp;rdquo; &amp;ldquo;java&amp;rdquo; &amp;ldquo;/usr/local/java/bin/java&amp;rdquo; 1&lt;/p&gt;
 
-&lt;p&gt;Step 7:-  &amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javac&amp;rdquo; &amp;ldquo;javac&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javac&amp;rdquo; 1&lt;/p&gt;
+&lt;p&gt;Step 7:-&lt;br /&gt;
+&amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javac&amp;rdquo; &amp;ldquo;javac&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javac&amp;rdquo; 1&lt;/p&gt;
 
-&lt;p&gt;Step 8:- &amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javaws&amp;rdquo; &amp;ldquo;javaws&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javaws&amp;rdquo; 1&lt;/p&gt;
+&lt;p&gt;Step 8:-
+&amp;gt;sudo update-alternatives &amp;ndash;install &amp;ldquo;/usr/bin/javaws&amp;rdquo; &amp;ldquo;javaws&amp;rdquo; &amp;ldquo;/usr/local/java/bin/javaws&amp;rdquo; 1&lt;/p&gt;
 
 &lt;p&gt;Step 9 :-
 &amp;gt;sudo update-alternatives –set java /usr/local/java/bin/java&lt;/p&gt;
